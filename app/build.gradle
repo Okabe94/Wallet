@@ -50,7 +50,8 @@ android {
 dependencies {
     // Core
     implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
     // Hilt
     implementation "com.google.dagger:hilt-android:2.38.1"
@@ -62,6 +63,7 @@ dependencies {
     implementation "androidx.compose.material:material:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 
     // Room
     kapt "androidx.room:room-compiler:$room_version"

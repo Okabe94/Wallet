@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +26,7 @@ import com.example.wallet.data.entity.Expense
 import com.example.wallet.data.viewmodel.ExpenseViewModel
 import com.example.wallet.ui.theme.WalletTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import java.util.*
 
 @AndroidEntryPoint
@@ -35,15 +37,29 @@ class MainActivity : ComponentActivity() {
 
         val viewModel: ExpenseViewModel by viewModels()
 
-        viewModel.createExpense(Expense("Hola", "234", true))
-
         setContent {
+            val expenses = viewModel.getExpenses().observeAsState().value.toString()
+
             WalletTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    a()
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        Text(text = expenses)
+                        Button(onClick = {
+                            viewModel.createExpense(
+                                Expense(
+                                    "Mañana",
+                                    "345",
+                                    false
+                                )
+                            )
+                        }) {
+                            Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                        }
+                    }
+//                    a()
                 }
             }
         }
