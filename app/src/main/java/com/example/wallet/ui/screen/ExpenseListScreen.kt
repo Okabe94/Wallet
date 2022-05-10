@@ -16,8 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.wallet.data.entity.Expense
 import com.example.wallet.ui.theme.WalletTheme
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
 @Preview(showBackground = true, name = "Light Mode")
@@ -35,38 +38,38 @@ private fun ExpenseListScreenPreview() {
 
 @Composable
 fun ExpenseListScreen(
-    paddingValues: PaddingValues = PaddingValues(0.dp),
-    expenses: List<Expense> = emptyList()
+    navController: NavController = rememberNavController(),
+//    viewModel: ExpenseListViewMode = HiltViewModel()
 ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(paddingValues)
+//            .padding(paddingValues)
     ) {
-        items(expenses) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column {
-                    Text(text = it.name, style = MaterialTheme.typography.body1)
-                    Text(text = it.amount, style = MaterialTheme.typography.body2)
-                }
-
-                if (it.isMonthly) {
-                    Icon(imageVector = Icons.Outlined.Star, contentDescription = null)
-                }
-            }
-            Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp),
-                color = Color.LightGray,
-                thickness = 1.dp
-            )
-        }
+//        items(expenses) {
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(20.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Column {
+//                    Text(text = it.name, style = MaterialTheme.typography.body1)
+//                    Text(text = it.amount, style = MaterialTheme.typography.body2)
+//                }
+//
+//                if (it.isMonthly) {
+//                    Icon(imageVector = Icons.Outlined.Star, contentDescription = null)
+//                }
+//            }
+//            Divider(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(horizontal = 10.dp),
+//                color = Color.LightGray,
+//                thickness = 1.dp
+//            )
+//        }
     }
 }
