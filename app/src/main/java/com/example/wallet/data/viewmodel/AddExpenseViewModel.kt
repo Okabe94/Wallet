@@ -18,7 +18,6 @@ class AddExpenseViewModel @Inject constructor(
     private val expenseRepository: ExpenseRepository
 ) : ViewModel() {
 
-    //    private val digitRegex = Regex("[\\d]*[.,]?[\\d]*")
     var name by mutableStateOf("")
     var amount by mutableStateOf("")
     var isMonthly by mutableStateOf(false)
@@ -38,13 +37,7 @@ class AddExpenseViewModel @Inject constructor(
     }
 
     fun onAmountChange(text: String) {
-        amount = if (text.isEmpty()) text
-        else {
-            when (text.toDoubleOrNull()) {
-                null -> amount
-                else -> text
-            }
-        }
+        amount = text
     }
 
     fun onMonthlyChange(checked: Boolean) {

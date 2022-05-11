@@ -1,4 +1,4 @@
-package com.example.wallet.ui.component
+package com.example.wallet.ui.component.wallet
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.example.wallet.ui.model.BottomBarMenuItem
+import com.example.wallet.ui.model.base.BottomBarMenuItem
 
 @Composable
 fun BottomBar(cutout: Shape?, menuItems: List<BottomBarMenuItem>) {

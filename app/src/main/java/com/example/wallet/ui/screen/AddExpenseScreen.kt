@@ -23,8 +23,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet.R
 import com.example.wallet.data.viewmodel.AddExpenseViewModel
-import com.example.wallet.ui.component.WalletBase
-import com.example.wallet.ui.component.reusable.CurrencyTransformation
+import com.example.wallet.ui.component.wallet.WalletBase
 import com.example.wallet.ui.component.reusable.WalletInputText
 
 @Composable
@@ -66,7 +65,7 @@ fun AddExpenseScreen(
                 keyboardType = KeyboardType.Number
             ),
             leadingIcon = Icons.Default.AccountCircle,
-            visualTransformation = CurrencyTransformation(),
+//            visualTransformation = CurrencyTransformation(),
             onChange = ::onAmountChange
         )
         Row(

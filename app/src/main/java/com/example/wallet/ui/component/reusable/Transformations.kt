@@ -1,6 +1,5 @@
 package com.example.wallet.ui.component.reusable
 
-import android.icu.number.NumberFormatter
 import android.util.Log
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
