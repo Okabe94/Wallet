@@ -29,5 +29,4 @@ object AppModule {
 
     @Provides
     fun providesExpenseRepository(dao: ExpenseDao) = ExpenseRepository(dao)
-
 }

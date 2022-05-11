@@ -5,10 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.example.wallet.data.entity.Expense
 import com.example.wallet.data.repository.ExpenseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,14 +18,14 @@ class AddExpenseViewModel @Inject constructor(
     private val expenseRepository: ExpenseRepository
 ) : ViewModel() {
 
-    val expenses = expenseRepository.getExpenses()
-    var expenseName by mutableStateOf("")
-    var expenseAmount by mutableStateOf("")
+    //    private val digitRegex = Regex("[\\d]*[.,]?[\\d]*")
+    var name by mutableStateOf("")
+    var amount by mutableStateOf("")
     var isMonthly by mutableStateOf(false)
 
     private fun clearFields() {
-        expenseAmount = ""
-        expenseName = ""
+        name = ""
+        amount = ""
         isMonthly = false
     }
 
@@ -31,26 +33,29 @@ class AddExpenseViewModel @Inject constructor(
         expenseRepository.createExpense(expense)
     }
 
-    private fun deleteExpense(expense: Expense) = viewModelScope.launch {
-        expenseRepository.deleteExpense(expense)
+    fun onNameChange(text: String) {
+        name = text
     }
 
-    fun onExpenseNameChange(text: String) {
-        expenseName = text
-    }
-
-    fun onExpenseAmountChange(text: String) {
-        expenseAmount = text
+    fun onAmountChange(text: String) {
+        amount = if (text.isEmpty()) text
+        else {
+            when (text.toDoubleOrNull()) {
+                null -> amount
+                else -> text
+            }
+        }
     }
 
     fun onMonthlyChange(checked: Boolean) {
         isMonthly = checked
     }
 
-    fun createNewExpense() {
-        if (expenseAmount.isNotBlank() && expenseName.isNotBlank()) {
-            createExpense(Expense(expenseName, expenseName, isMonthly))
+    fun createNewExpense(navController: NavController) {
+        if (amount.isNotBlank() && name.isNotBlank()) {
+            createExpense(Expense(name, name, isMonthly))
             clearFields()
+            navController.navigateUp()
         }
     }
 }
