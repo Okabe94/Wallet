@@ -23,13 +23,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet.R
 import com.example.wallet.data.viewmodel.AddViewModel
-import com.example.wallet.ui.component.wallet.WalletBase
-import com.example.wallet.ui.component.reusable.WalletInputText
+import com.example.wallet.ui.component.AppBaseSurface
+import com.example.wallet.ui.component.WalletInputText
 
 @Composable
 @Preview(name = "Light mode", showBackground = true)
 @Preview(name = "Dark mode", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
-private fun AddScreenPreview() = WalletBase { AddScreen() }
+private fun AddScreenPreview() = AppBaseSurface { AddScreen() }
 
 @Composable
 fun AddScreen(

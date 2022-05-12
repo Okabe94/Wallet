@@ -1,4 +1,4 @@
-package com.example.wallet.ui.component.reusable
+package com.example.wallet.ui.component
 
 import android.util.Log
 import androidx.compose.ui.text.AnnotatedString

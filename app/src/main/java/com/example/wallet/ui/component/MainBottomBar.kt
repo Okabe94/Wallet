@@ -1,4 +1,4 @@
-package com.example.wallet.ui.component.wallet
+package com.example.wallet.ui.component
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,10 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.example.wallet.ui.navigation.Screen
 
 @Composable
-fun BottomBar(cutout: Shape?, content: @Composable RowScope.() -> Unit) = BottomAppBar(
+fun MainBottomBar(cutout: Shape?, content: @Composable RowScope.() -> Unit) = BottomAppBar(
     modifier = Modifier.fillMaxWidth(),
     backgroundColor = MaterialTheme.colors.surface,
     cutoutShape = cutout,
@@ -21,7 +24,7 @@ fun BottomBar(cutout: Shape?, content: @Composable RowScope.() -> Unit) = Bottom
 )
 
 @Composable
-fun RowScope.HomeBottomBarNavItem(
+fun RowScope.BottomBarNavItem(
     image: ImageVector,
     description: String? = null,
     isSelected: Boolean = false,
@@ -39,7 +42,18 @@ fun RowScope.HomeBottomBarNavItem(
 )
 
 @Composable
-fun BottomBarActionButton(
+fun RowScope.MainBottomBarNavItems(
+    routeList: List<Screen>,
+    currentRoute: String?,
+    onClick: (String) -> Unit
+) = routeList.forEach {
+    BottomBarNavItem(
+        it.Icon, stringResource(it.title), currentRoute == it.route
+    ) { onClick(it.route) }
+}
+
+@Composable
+fun MainBottomBarFabButton(
     icon: ImageVector,
     description: String?,
     shape: Shape,

@@ -21,12 +21,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet.data.viewmodel.HomeViewModel
-import com.example.wallet.ui.component.wallet.WalletBase
+import com.example.wallet.ui.component.AppBaseSurface
 
 @Composable
 @Preview(showBackground = true, name = "Light Mode")
 @Preview(showBackground = true, name = "Dark Mode", uiMode = UI_MODE_NIGHT_YES)
-private fun HomeScreenPreview() = WalletBase { HomeScreen() }
+private fun HomeScreenPreview() = AppBaseSurface { HomeScreen() }
 
 @Composable
 fun HomeScreen(
@@ -36,7 +36,7 @@ fun HomeScreen(
 ) {
     val expenses = viewModel.expenses.collectAsState(initial = listOf())
 
-    WalletBase {
+    AppBaseSurface {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()

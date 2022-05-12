@@ -1,4 +1,4 @@
-package com.example.wallet.ui.component.wallet
+package com.example.wallet.ui.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,20 +9,17 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.wallet.R
-import com.example.wallet.ui.model.base.BottomMenuItem
-import com.example.wallet.ui.model.base.FabActionButton
+import com.example.wallet.ui.model.FabActionButton
 
 @Preview(showBackground = true, name = "Light Mode")
 @Preview(showBackground = true, name = "Dark Mode", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun MainScaffoldSectionPreview() = WalletBase {
+private fun MainScaffoldSectionPreview() = AppBaseSurface {
     MainScaffold(FabActionButton(Icons.Default.Add, CircleShape, stringResource(R.string.add)) {})
 }
 
@@ -37,11 +34,11 @@ fun MainScaffold(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
-            with(fab) { BottomBarActionButton(icon, description, shape, onClick) }
+            with(fab) { MainBottomBarFabButton(icon, description, shape, onClick) }
         },
         isFloatingActionButtonDocked = isDocked,
         floatingActionButtonPosition = position,
-        bottomBar = { BottomBar(fab.shape, bottomBarContent) },
+        bottomBar = { MainBottomBar(fab.shape, bottomBarContent) },
         content = content
     )
 }
