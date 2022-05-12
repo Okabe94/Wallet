@@ -1,4 +1,4 @@
-package com.example.wallet.ui.model.base
+package com.example.wallet.ui.model
 
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector

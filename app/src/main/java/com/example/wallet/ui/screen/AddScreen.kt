@@ -22,19 +22,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet.R
-import com.example.wallet.data.viewmodel.AddExpenseViewModel
+import com.example.wallet.data.viewmodel.AddViewModel
 import com.example.wallet.ui.component.wallet.WalletBase
 import com.example.wallet.ui.component.reusable.WalletInputText
 
 @Composable
 @Preview(name = "Light mode", showBackground = true)
 @Preview(name = "Dark mode", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
-private fun AddExpenseScreenPreview() = WalletBase { AddExpenseScreen() }
+private fun AddScreenPreview() = WalletBase { AddScreen() }
 
 @Composable
-fun AddExpenseScreen(
+fun AddScreen(
     navController: NavController = rememberNavController(),
-    viewModel: AddExpenseViewModel = hiltViewModel()
+    viewModel: AddViewModel = hiltViewModel()
 ): Unit = with(viewModel) {
     Column(
         modifier = Modifier

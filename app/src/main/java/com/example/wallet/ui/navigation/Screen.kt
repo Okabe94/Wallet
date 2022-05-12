@@ -10,7 +10,7 @@ import com.example.wallet.R
 sealed class Screen(val title: Int, val Icon: ImageVector, val route: String) {
     object HomeScreen : Screen(R.string.home, Icons.Default.Home, "home_screen")
     object ProfileScreen : Screen(R.string.profile, Icons.Default.Person, "profile_screen")
-    object AddExpenseScreen : Screen(R.string.add, Icons.Default.Add, "add_expense_screen")
+    object AddScreen : Screen(R.string.add, Icons.Default.Add, "add_expense_screen")
 }
 
 
