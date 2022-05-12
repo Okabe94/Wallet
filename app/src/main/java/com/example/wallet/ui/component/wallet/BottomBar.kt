@@ -9,10 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.example.wallet.ui.model.base.BottomBarMenuItem
+import com.example.wallet.ui.model.base.BottomMenuItem
 
 @Composable
-fun BottomBar(cutout: Shape?, menuItems: List<BottomBarMenuItem>) {
+fun BottomBar(cutout: Shape?, menuItems: List<BottomMenuItem>, onClick: () -> Unit) {
     BottomAppBar(
         modifier = Modifier.fillMaxWidth(),
         backgroundColor = MaterialTheme.colors.surface,
@@ -21,13 +21,13 @@ fun BottomBar(cutout: Shape?, menuItems: List<BottomBarMenuItem>) {
         elevation = 5.dp
     ) {
         menuItems.forEach { item ->
-            BottomBarItem(item.icon, item.name, item.isSelected, item.onClick)
+            HomeBottomBarItem(item.icon, item.name, item.isSelected, onClick)
         }
     }
 }
 
 @Composable
-fun RowScope.BottomBarItem(
+fun RowScope.HomeBottomBarItem(
     image: ImageVector,
     description: String? = null,
     isSelected: Boolean = false,

@@ -1,10 +1,12 @@
 package com.example.wallet.ui.model.base
 
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 
-abstract class BottomBarMenuItem(
-    val name: String,
+data class FabActionButton(
     val icon: ImageVector,
-    var isSelected: Boolean,
+    val shape: Shape,
+    val description: String?,
     val onClick: () -> Unit
 )
+

@@ -11,12 +11,12 @@ import com.example.wallet.ui.screen.ExpenseListScreen
 fun SetupNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Screen.HOME_SCREEN.route
+        startDestination = Screen.HomeScreen.route
     ) {
-        composable(route = Screen.HOME_SCREEN.route) {
+        composable(route = Screen.HomeScreen.route) {
             ExpenseListScreen(navController)
         }
-        composable(route = Screen.ADD_EXPENSE_SCREEN.route) {
+        composable(route = Screen.AddExpenseScreen.route) {
             AddExpenseScreen(navController)
         }
     }

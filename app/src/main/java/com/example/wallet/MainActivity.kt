@@ -13,10 +13,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-//            val viewModel: AddExpenseViewModel by viewModels()
-            val navController = rememberNavController()
+        val navController = rememberNavController()
             SetupNavGraph(navController)
-//            WalletBase { AddExpenseScreen(navController, viewModel) }
         }
     }
 }

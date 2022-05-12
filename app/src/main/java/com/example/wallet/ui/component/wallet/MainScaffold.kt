@@ -3,9 +3,11 @@ package com.example.wallet.ui.component.wallet
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
@@ -13,37 +15,36 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.wallet.R
-import com.example.wallet.ui.model.HomeBottomBarItem
-import com.example.wallet.ui.model.HomeFloatingButton
-import com.example.wallet.ui.model.base.BottomBarActionButton
-import com.example.wallet.ui.model.base.BottomBarMenuItem
+import com.example.wallet.ui.model.base.BottomMenuItem
+import com.example.wallet.ui.model.base.FabActionButton
 
 @Preview(showBackground = true, name = "Light Mode")
 @Preview(showBackground = true, name = "Dark Mode", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun MainScaffoldSectionPreview() = WalletBase {
     MainScaffold(
-        floating = HomeFloatingButton(stringResource(R.string.add)) {},
+        floating = FabActionButton(Icons.Default.Add, CircleShape, stringResource(R.string.add)) {},
         menuItems = listOf(
-            HomeBottomBarItem(
+            BottomMenuItem(
                 stringResource(R.string.home),
                 Icons.Default.Home,
                 false
-            ) {}, HomeBottomBarItem(
+            ), BottomMenuItem(
                 stringResource(R.string.user),
                 Icons.Default.Person,
                 false
-            ) {}
+            )
         )
     )
 }
 
 @Composable
 fun MainScaffold(
-    floating: BottomBarActionButton,
-    menuItems: List<BottomBarMenuItem>,
+    floating: FabActionButton,
+    menuItems: List<BottomMenuItem>,
     isDocked: Boolean = true,
     position: FabPosition = FabPosition.Center,
+    onClick: () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit = {}
 ) {
     Scaffold(
@@ -53,7 +54,7 @@ fun MainScaffold(
         },
         isFloatingActionButtonDocked = isDocked,
         floatingActionButtonPosition = position,
-        bottomBar = { BottomBar(floating.shape, menuItems) },
+        bottomBar = { BottomBar(floating.shape, menuItems, onClick) },
         content = content
     )
 }
