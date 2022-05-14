@@ -1,4 +1,4 @@
-package com.example.wallet.ui.component
+package com.example.wallet.ui.component.reusable
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon

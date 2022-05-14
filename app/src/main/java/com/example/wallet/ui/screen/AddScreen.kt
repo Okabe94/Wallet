@@ -23,23 +23,24 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet.R
 import com.example.wallet.data.viewmodel.AddViewModel
-import com.example.wallet.ui.component.AppBaseSurface
-import com.example.wallet.ui.component.WalletInputText
+import com.example.wallet.ui.component.base.AppBaseSurface
+import com.example.wallet.ui.component.reusable.WalletInputText
 
 @Composable
 @Preview(name = "Light mode", showBackground = true)
 @Preview(name = "Dark mode", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
-private fun AddScreenPreview() = AppBaseSurface { AddScreen() }
+private fun AddScreenPreview() = AppBaseSurface { AddScreen(PaddingValues(10.dp)) }
 
 @Composable
 fun AddScreen(
+    paddingValues: PaddingValues,
     navController: NavController = rememberNavController(),
-    viewModel: AddViewModel = hiltViewModel()
+    viewModel: AddViewModel = hiltViewModel(),
 ): Unit = with(viewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp),
+            .padding(paddingValues),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically)
     ) {

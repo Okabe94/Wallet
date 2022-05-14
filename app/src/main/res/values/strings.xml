@@ -9,4 +9,7 @@
     <string name="amount">Amount</string>
     <string name="name">Name</string>
     <string name="profile">Profile</string>
+    <string name="detail">Detail</string>
+    <string name="extend">Extend</string>
+    <string name="shrink">Shrink</string>
 </resources>

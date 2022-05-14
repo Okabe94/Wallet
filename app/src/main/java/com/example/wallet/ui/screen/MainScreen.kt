@@ -11,9 +11,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet.R
-import com.example.wallet.ui.component.AppBaseSurface
-import com.example.wallet.ui.component.MainBottomBarNavItems
-import com.example.wallet.ui.component.MainScaffold
+import com.example.wallet.ui.component.base.AppBaseSurface
+import com.example.wallet.ui.component.main.MainBottomBarNavItems
+import com.example.wallet.ui.component.main.MainScaffold
 import com.example.wallet.ui.model.FabActionButton
 import com.example.wallet.ui.navigation.Screen
 import com.example.wallet.ui.navigation.SetupNavGraph
@@ -43,6 +43,8 @@ fun MainScreen() {
 }
 
 private fun NavController.navigate(current: String?, to: String) {
-    if (current != to) this.navigate(to)
+    if (current != to) this.navigate(to) {
+        popUpTo(Screen.HomeScreen.route)
+    }
 }
 

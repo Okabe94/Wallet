@@ -1,4 +1,4 @@
-package com.example.wallet.ui.component
+package com.example.wallet.ui.component.main
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.wallet.R
+import com.example.wallet.ui.component.base.AppBaseSurface
 import com.example.wallet.ui.model.FabActionButton
 
 @Preview(showBackground = true, name = "Light Mode")

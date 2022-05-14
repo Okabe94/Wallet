@@ -11,6 +11,7 @@ sealed class Screen(val title: Int, val Icon: ImageVector, val route: String) {
     object HomeScreen : Screen(R.string.home, Icons.Default.Home, "home_screen")
     object ProfileScreen : Screen(R.string.profile, Icons.Default.Person, "profile_screen")
     object AddScreen : Screen(R.string.add, Icons.Default.Add, "add_expense_screen")
+    object DetailScreen : Screen(R.string.detail, Icons.Default.Add, "detail_screen")
 }
 
 
