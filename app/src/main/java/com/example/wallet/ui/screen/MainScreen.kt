@@ -43,8 +43,6 @@ fun MainScreen() {
 }
 
 private fun NavController.navigate(current: String?, to: String) {
-    if (current != to) this.navigate(to) {
-        popUpTo(Screen.HomeScreen.route)
-    }
+    if (current != to) navigate(to) { popUpTo(Screen.HomeScreen.route) }
 }
 

@@ -23,9 +23,9 @@ fun DetailScreen(
     paddingValues: PaddingValues,
     navController: NavController = rememberNavController(),
     viewModel: DetailViewModel = hiltViewModel(),
-    id: Int
+    id: Int?
 ) {
-    if (id == 0) {
+    if (id == null) {
         Text(text = "ERROR")
         return
     }
