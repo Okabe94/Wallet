@@ -1,4 +1,4 @@
-package com.example.wallet.ui.util.preferences
+package com.example.wallet.data.util.preferences.application
 
 import androidx.datastore.core.Serializer
 import kotlinx.serialization.SerializationException

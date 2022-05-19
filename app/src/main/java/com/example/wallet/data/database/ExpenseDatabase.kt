@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import com.example.wallet.data.dao.ExpenseDao
 import com.example.wallet.data.entity.Expense
 
+
 @Database(entities = [Expense::class], version = 1, exportSchema = false)
 abstract class ExpenseDatabase : RoomDatabase() {
 

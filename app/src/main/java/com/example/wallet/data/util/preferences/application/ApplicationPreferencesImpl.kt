@@ -1,4 +1,4 @@
-package com.example.wallet.ui.util.preferences
+package com.example.wallet.data.util.preferences.application
 
 import android.content.Context
 import androidx.datastore.dataStore
@@ -9,7 +9,7 @@ import javax.inject.Inject
 private const val APP_PREFERENCES = "App_Preferences"
 private val Context.dataStore by dataStore(APP_PREFERENCES, ApplicationPreferencesSerializer)
 
-class ApplicationPreferencesManager @Inject constructor(
+class ApplicationPreferencesImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ApplicationPreferences {
 

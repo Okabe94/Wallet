@@ -5,10 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.wallet.data.entity.Expense
 import com.example.wallet.data.repository.ExpenseRepository
 import com.example.wallet.data.repository.RecurrentRepository
-import com.example.wallet.ui.util.dispatcher.WalletDispatcher
+import com.example.wallet.data.util.dispatcher.ApplicationDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -17,7 +15,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val recurrentRepository: RecurrentRepository,
     private val expenseRepository: ExpenseRepository,
-    private val dispatcher: WalletDispatcher
+    private val dispatcher: ApplicationDispatcher
 ) : ViewModel() {
 
     private val lastDate = 0L

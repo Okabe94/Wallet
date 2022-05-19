@@ -1,8 +1,8 @@
-package com.example.wallet.ui.util.dispatcher
+package com.example.wallet.data.util.dispatcher
 
 import kotlinx.coroutines.Dispatchers
 
-class WalletDispatcherImpl : WalletDispatcher {
+class ApplicationDispatcherImpl : ApplicationDispatcher {
     override val io = Dispatchers.IO
     override val main = Dispatchers.Main
     override val default = Dispatchers.Default

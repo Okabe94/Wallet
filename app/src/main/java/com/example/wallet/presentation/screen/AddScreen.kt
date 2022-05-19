@@ -1,4 +1,4 @@
-package com.example.wallet.ui.screen
+package com.example.wallet.presentation.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
@@ -23,8 +23,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet.R
 import com.example.wallet.data.viewmodel.AddViewModel
-import com.example.wallet.ui.component.base.AppBaseSurface
-import com.example.wallet.ui.component.reusable.WalletInputText
+import com.example.wallet.presentation.component.base.AppBaseSurface
+import com.example.wallet.presentation.component.reusable.WalletInputText
 
 @Composable
 @Preview(name = "Light mode", showBackground = true)

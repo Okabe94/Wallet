@@ -1,4 +1,4 @@
-package com.example.wallet.ui.screen
+package com.example.wallet.presentation.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.shape.CircleShape
@@ -11,12 +11,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet.R
-import com.example.wallet.ui.component.base.AppBaseSurface
-import com.example.wallet.ui.component.main.MainBottomBarNavItems
-import com.example.wallet.ui.component.main.MainScaffold
-import com.example.wallet.ui.model.FabActionButton
-import com.example.wallet.ui.navigation.Screen
-import com.example.wallet.ui.navigation.SetupNavGraph
+import com.example.wallet.presentation.component.base.AppBaseSurface
+import com.example.wallet.presentation.component.main.MainBottomBarNavItems
+import com.example.wallet.presentation.component.main.MainScaffold
+import com.example.wallet.presentation.model.FabActionButton
+import com.example.wallet.navigation.Screen
+import com.example.wallet.navigation.SetupNavGraph
 
 @Composable
 @Preview(showBackground = true, name = "Light Mode")

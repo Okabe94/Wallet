@@ -1,4 +1,4 @@
-package com.example.wallet.ui.navigation
+package com.example.wallet.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -7,10 +7,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.wallet.ui.screen.AddScreen
-import com.example.wallet.ui.screen.DetailScreen
-import com.example.wallet.ui.screen.HomeScreen
-import com.example.wallet.ui.screen.ProfileScreen
+import com.example.wallet.presentation.screen.AddScreen
+import com.example.wallet.presentation.screen.DetailScreen
+import com.example.wallet.presentation.screen.HomeScreen
+import com.example.wallet.presentation.screen.ProfileScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController, paddingValues: PaddingValues) {

@@ -1,4 +1,4 @@
-package com.example.wallet.ui.component.base
+package com.example.wallet.presentation.component.base
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme

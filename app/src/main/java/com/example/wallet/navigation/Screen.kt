@@ -1,4 +1,4 @@
-package com.example.wallet.ui.navigation
+package com.example.wallet.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add

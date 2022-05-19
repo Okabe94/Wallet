@@ -1,4 +1,4 @@
-package com.example.wallet.ui.screen
+package com.example.wallet.presentation.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

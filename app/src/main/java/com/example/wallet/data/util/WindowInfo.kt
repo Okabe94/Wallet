@@ -1,4 +1,4 @@
-package com.example.wallet.ui.util
+package com.example.wallet.data.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration

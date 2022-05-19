@@ -1,8 +1,8 @@
-package com.example.wallet.ui.util.dispatcher
+package com.example.wallet.data.util.dispatcher
 
 import kotlinx.coroutines.CoroutineDispatcher
 
-interface WalletDispatcher {
+interface ApplicationDispatcher {
     val io: CoroutineDispatcher
     val main: CoroutineDispatcher
     val default: CoroutineDispatcher

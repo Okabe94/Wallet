@@ -1,4 +1,4 @@
-package com.example.wallet.ui.util.preferences
+package com.example.wallet.data.util.preferences.application
 
 import kotlinx.serialization.Serializable
 

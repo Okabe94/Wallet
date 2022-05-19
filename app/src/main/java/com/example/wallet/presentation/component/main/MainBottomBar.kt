@@ -1,4 +1,4 @@
-package com.example.wallet.ui.component.main
+package com.example.wallet.presentation.component.main
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.wallet.ui.navigation.Screen
+import com.example.wallet.navigation.Screen
 
 @Composable
 fun MainBottomBar(cutout: Shape?, content: @Composable RowScope.() -> Unit) = BottomAppBar(

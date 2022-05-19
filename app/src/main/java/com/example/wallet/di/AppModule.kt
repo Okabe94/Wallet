@@ -8,18 +8,17 @@ import com.example.wallet.data.dao.RecurrentDao
 import com.example.wallet.data.database.ExpenseDatabase
 import com.example.wallet.data.repository.ExpenseRepository
 import com.example.wallet.data.repository.RecurrentRepository
-import com.example.wallet.ui.util.dispatcher.WalletDispatcher
-import com.example.wallet.ui.util.dispatcher.WalletDispatcherImpl
-import com.example.wallet.ui.util.preferences.ApplicationPreferences
-import com.example.wallet.ui.util.preferences.ApplicationPreferencesManager
+import com.example.wallet.data.util.Constants
+import com.example.wallet.data.util.dispatcher.ApplicationDispatcher
+import com.example.wallet.data.util.dispatcher.ApplicationDispatcherImpl
+import com.example.wallet.data.util.preferences.application.ApplicationPreferences
+import com.example.wallet.data.util.preferences.application.ApplicationPreferencesImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-
-private const val DB_NAME = "Expenses_database"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -28,18 +27,17 @@ object AppModule {
     @Provides
     @Singleton
     fun providesExpensesDatabase(app: Application) = Room
-        .databaseBuilder(app, ExpenseDatabase::class.java, DB_NAME)
+        .databaseBuilder(app, ExpenseDatabase::class.java, Constants.DB_NAME)
         .fallbackToDestructiveMigration()
         .build()
 
     @Provides
     @Singleton
-    fun providesPreferences(@ApplicationContext context: Context): ApplicationPreferences {
-        return ApplicationPreferencesManager(context)
-    }
+    fun providesPreferences(@ApplicationContext context: Context): ApplicationPreferences =
+        ApplicationPreferencesImpl(context)
 
     @Provides
-    fun providesWalletDispatcher(): WalletDispatcher = WalletDispatcherImpl()
+    fun providesWalletDispatcher(): ApplicationDispatcher = ApplicationDispatcherImpl()
 
     @Provides
     fun providesExpenseDao(db: ExpenseDatabase) = db.expenseDao()

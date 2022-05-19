@@ -1,4 +1,4 @@
-package com.example.wallet.ui.screen
+package com.example.wallet.presentation.screen
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
