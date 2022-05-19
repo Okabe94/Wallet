@@ -9,6 +9,6 @@ class ExpenseRepository @Inject constructor(
 ) {
     fun getExpenses() = expenseDao.getExpenses()
     fun getExpense(id: Int) = expenseDao.getExpense(id)
-    suspend fun deleteExpense(expense: Expense) = expenseDao.deleteExpense(expense)
     suspend fun createExpense(expense: Expense) = expenseDao.createExpense(expense)
+    suspend fun updateExpense(expense: Expense) = expenseDao.updateExpense(expense)
 }

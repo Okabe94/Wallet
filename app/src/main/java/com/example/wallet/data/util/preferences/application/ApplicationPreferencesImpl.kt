@@ -25,10 +25,13 @@ class ApplicationPreferencesImpl @Inject constructor(
         set { it.copy(lastDateOpened = date) }
     }
 
-    private suspend fun set(action: suspend (ApplicationPreferencesModel) -> ApplicationPreferencesModel) {
+    private suspend fun set(
+        action: suspend (ApplicationPreferencesModel) -> ApplicationPreferencesModel
+    ) {
         context.dataStore.updateData(action)
     }
 
-    private fun <T> get(action: (ApplicationPreferencesModel) -> T) = context.dataStore.data.map(action)
+    private fun <T> get(action: (ApplicationPreferencesModel) -> T) =
+        context.dataStore.data.map(action)
 
 }

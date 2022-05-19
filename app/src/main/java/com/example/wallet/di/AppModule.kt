@@ -43,8 +43,11 @@ object AppModule {
     fun providesExpenseDao(db: ExpenseDatabase) = db.expenseDao()
 
     @Provides
-    fun providesExpenseRepository(dao: ExpenseDao) = ExpenseRepository(dao)
+    fun providesRecurrentDao(db: ExpenseDatabase) = db.recurrentDao()
 
     @Provides
     fun providesRecurrentRepository(dao: RecurrentDao) = RecurrentRepository(dao)
+
+    @Provides
+    fun providesExpenseRepository(dao: ExpenseDao) = ExpenseRepository(dao)
 }
