@@ -10,8 +10,7 @@ data class Expense(
     val amount: String,
     val isMonthly: Boolean,
     val date: Long = Calendar.getInstance().timeInMillis,
-    val recurrentUpdated: Boolean = false
-) {
+    val recurrentUpdated: Boolean = false,
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
-}
+    val id: Int = 0,
+)

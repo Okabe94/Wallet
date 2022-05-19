@@ -1,18 +1,19 @@
 package com.example.wallet.data.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wallet.data.entity.Expense
-import com.example.wallet.data.repository.ExpenseRepository
 import com.example.wallet.data.repository.RecurrentRepository
 import com.example.wallet.data.util.dispatcher.ApplicationDispatcher
 import com.example.wallet.data.util.preferences.application.ApplicationPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
+
+private const val TAG = "MainViewModel"
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -25,9 +26,9 @@ class MainViewModel @Inject constructor(
 
     fun checkForRecurring() {
         viewModelScope.launch(dispatcher.io) {
-            val missingMonthlyExpenses = mutableListOf<Expense>()
+            val newPending = mutableListOf<Expense>()
 
-            recurrentRepository.getLatestRecurrent().forEach {
+            val oldPending = recurrentRepository.getPendingRecurrent().onEach {
                 val pendingExpenses = async {
                     val expenses = mutableListOf<Expense>()
                     val nextDate = Calendar.getInstance().apply {
@@ -41,9 +42,20 @@ class MainViewModel @Inject constructor(
                     }
                     expenses
                 }
-                missingMonthlyExpenses.addAll(pendingExpenses.await())
+                newPending.addAll(pendingExpenses.await())
             }
-            recurrentRepository.createRecurrent(missingMonthlyExpenses)
+            val updatedOldPending = oldPending.map { it.copy(recurrentUpdated = true) }
+            runCatching {
+                recurrentRepository.updateAndCreatePendingRecurrent(
+                    newPending,
+                    updatedOldPending
+                )
+            }.onFailure {
+                Log.e(TAG, "Error insertando los valores nuevos recurrentes")
+                Log.e(TAG, it.message, it.cause)
+            }.onSuccess {
+                Log.d(TAG, "Se insertaron todos los valores nuevos")
+            }
         }
     }
 

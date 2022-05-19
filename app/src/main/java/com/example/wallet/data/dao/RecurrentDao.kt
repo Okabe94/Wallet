@@ -1,7 +1,6 @@
 package com.example.wallet.data.dao
 
 import androidx.room.*
-import androidx.room.OnConflictStrategy.ABORT
 import com.example.wallet.data.entity.Expense
 
 @Dao
@@ -11,9 +10,17 @@ interface RecurrentDao {
     suspend fun getPendingRecurrent(): List<Expense>
 
     @Transaction
-    suspend fun createRecurrentExpenses(list: List<Expense>) = list.forEach { createExpense(it) }
+    suspend fun updateAndCreatePendingRecurrent(
+        newPending: List<Expense>,
+        oldPending: List<Expense>
+    ) {
+        createAll(newPending)
+        updateAll(oldPending)
+    }
 
-    @Insert(onConflict = ABORT)
-    suspend fun createExpense(expense: Expense)
+    @Insert
+    suspend fun createAll(expense: List<Expense>)
 
+    @Update
+    suspend fun updateAll(expense: List<Expense>)
 }

@@ -7,6 +7,9 @@ import javax.inject.Inject
 class RecurrentRepository @Inject constructor(
     private val dao: RecurrentDao
 ) {
-    suspend fun getLatestRecurrent() = dao.getPendingRecurrent()
-    suspend fun createRecurrent(list: List<Expense>) = dao.createRecurrentExpenses(list)
+    suspend fun getPendingRecurrent() = dao.getPendingRecurrent()
+    suspend fun updateAndCreatePendingRecurrent(
+        newPending: List<Expense>,
+        oldPending: List<Expense>
+    ) = dao.updateAndCreatePendingRecurrent(newPending, oldPending)
 }
