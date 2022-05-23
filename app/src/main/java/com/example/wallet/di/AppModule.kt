@@ -3,16 +3,19 @@ package com.example.wallet.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import com.example.wallet.data.dao.ExpenseDao
-import com.example.wallet.data.dao.RecurrentDao
-import com.example.wallet.data.database.ExpenseDatabase
-import com.example.wallet.data.repository.ExpenseRepository
-import com.example.wallet.data.repository.RecurrentRepository
+import androidx.room.RoomDatabase
+import com.example.wallet.data.datasource.dao.ExpenseDao
+import com.example.wallet.data.datasource.dao.RecurrentDao
+import com.example.wallet.data.datasource.database.ExpenseDatabase
+import com.example.wallet.data.repository.ExpenseRepositoryImpl
+import com.example.wallet.data.repository.RecurrentRepositoryImpl
 import com.example.wallet.data.util.Constants
 import com.example.wallet.data.util.dispatcher.ApplicationDispatcher
 import com.example.wallet.data.util.dispatcher.ApplicationDispatcherImpl
-import com.example.wallet.data.util.preferences.application.ApplicationPreferences
-import com.example.wallet.data.util.preferences.application.ApplicationPreferencesImpl
+import com.example.wallet.domain.repository.ExpenseRepository
+import com.example.wallet.domain.repository.RecurrentRepository
+import com.example.wallet.data.preferences.application.ApplicationPreferences
+import com.example.wallet.data.preferences.application.ApplicationPreferencesImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,15 +29,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesExpensesDatabase(app: Application) = Room
+    fun providesExpensesDatabase(app: Application): RoomDatabase = Room
         .databaseBuilder(app, ExpenseDatabase::class.java, Constants.DB_NAME)
         .fallbackToDestructiveMigration()
         .build()
 
     @Provides
     @Singleton
-    fun providesPreferences(@ApplicationContext context: Context): ApplicationPreferences =
-        ApplicationPreferencesImpl(context)
+    fun providesPreferences(
+        @ApplicationContext context: Context
+    ): ApplicationPreferences = ApplicationPreferencesImpl(context)
 
     @Provides
     fun providesWalletDispatcher(): ApplicationDispatcher = ApplicationDispatcherImpl()
@@ -46,8 +50,10 @@ object AppModule {
     fun providesRecurrentDao(db: ExpenseDatabase) = db.recurrentDao()
 
     @Provides
-    fun providesRecurrentRepository(dao: RecurrentDao) = RecurrentRepository(dao)
+    fun providesRecurrentRepository(
+        dao: RecurrentDao
+    ): RecurrentRepository = RecurrentRepositoryImpl(dao)
 
     @Provides
-    fun providesExpenseRepository(dao: ExpenseDao) = ExpenseRepository(dao)
+    fun providesExpenseRepository(dao: ExpenseDao): ExpenseRepository = ExpenseRepositoryImpl(dao)
 }
