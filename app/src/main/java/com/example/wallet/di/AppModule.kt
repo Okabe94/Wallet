@@ -26,10 +26,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
     @Provides
     @Singleton
-    fun providesExpensesDatabase(app: Application): RoomDatabase = Room
+    fun providesExpensesDatabase(app: Application) = Room
         .databaseBuilder(app, ExpenseDatabase::class.java, Constants.DB_NAME)
         .fallbackToDestructiveMigration()
         .build()
@@ -42,18 +41,4 @@ object AppModule {
 
     @Provides
     fun providesWalletDispatcher(): ApplicationDispatcher = ApplicationDispatcherImpl()
-
-    @Provides
-    fun providesExpenseDao(db: ExpenseDatabase) = db.expenseDao()
-
-    @Provides
-    fun providesRecurrentDao(db: ExpenseDatabase) = db.recurrentDao()
-
-    @Provides
-    fun providesRecurrentRepository(
-        dao: RecurrentDao
-    ): RecurrentRepository = RecurrentRepositoryImpl(dao)
-
-    @Provides
-    fun providesExpenseRepository(dao: ExpenseDao): ExpenseRepository = ExpenseRepositoryImpl(dao)
 }
