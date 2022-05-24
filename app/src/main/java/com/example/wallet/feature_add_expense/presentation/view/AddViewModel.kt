@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.wallet.feature_add_expense.domain.entity.Expense
+import com.example.wallet.core.domain.entity.Expense
 import com.example.wallet.feature_add_expense.data.repository.ExpenseRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

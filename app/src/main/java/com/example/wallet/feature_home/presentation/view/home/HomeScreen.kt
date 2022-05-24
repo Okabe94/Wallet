@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet.R
-import com.example.wallet.feature_add_expense.domain.entity.Expense
+import com.example.wallet.core.domain.entity.Expense
 import com.example.wallet.core.presentation.component.AppBaseSurface
 import com.example.wallet.core.presentation.util.navigation.Screen
 

@@ -1,6 +1,6 @@
 package com.example.wallet.feature_add_expense.domain.repository
 
-import com.example.wallet.feature_add_expense.domain.entity.Expense
+import com.example.wallet.core.domain.entity.Expense
 import kotlinx.coroutines.flow.Flow
 
 interface ExpenseRepository {

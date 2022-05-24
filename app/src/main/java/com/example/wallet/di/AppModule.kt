@@ -5,8 +5,8 @@ import android.content.Context
 import androidx.room.Room
 import com.example.wallet.core.data.datasource.database.ExpenseDatabase
 import com.example.wallet.core.data.util.Constants
-import com.example.wallet.feature_add_expense.data.util.dispatcher.ApplicationDispatcher
-import com.example.wallet.feature_add_expense.data.util.dispatcher.ApplicationDispatcherImpl
+import com.example.wallet.core.presentation.util.dispatcher.ApplicationDispatcher
+import com.example.wallet.core.presentation.util.dispatcher.ApplicationDispatcherImpl
 import com.example.wallet.core.data.preferences.application.ApplicationPreferences
 import com.example.wallet.core.data.preferences.application.ApplicationPreferencesImpl
 import dagger.Module

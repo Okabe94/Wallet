@@ -2,7 +2,7 @@ package com.example.wallet.feature_add_expense.data.datasource.dao
 
 import androidx.room.*
 import androidx.room.OnConflictStrategy.IGNORE
-import com.example.wallet.feature_add_expense.domain.entity.Expense
+import com.example.wallet.core.domain.entity.Expense
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -3,6 +3,7 @@ package com.example.wallet.core.data.preferences.application
 import android.content.Context
 import androidx.datastore.dataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -19,10 +20,10 @@ class ApplicationPreferencesImpl @Inject constructor(
         set { it.copy(theme = theme) }
     }
 
-    override suspend fun getLastDateOpened() = get { it.lastDateOpened }
+    override suspend fun getLastUpdated() = get { it.lastUpdated }.first()
 
-    override suspend fun setLastDateOpened(date: Long) {
-        set { it.copy(lastDateOpened = date) }
+    override suspend fun setLastUpdated(date: Long) {
+        set { it.copy(lastUpdated = date) }
     }
 
     private suspend fun set(

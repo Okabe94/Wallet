@@ -11,6 +11,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import java.time.Clock
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -24,11 +25,16 @@ object MainModule {
     ): RecurrentRepository = RecurrentRepositoryImpl(dao)
 
     @Provides
-    fun providesCheckUseCase(
-        repository: RecurrentRepository,
-        preferences: ApplicationPreferences
-    ) = UpdateRecurrentUseCase(repository, preferences)
+    fun providesClock(): Clock = Clock.systemDefaultZone()
 
     @Provides
-    fun providesRecurrentUseCases(updateRecurrentUseCase: UpdateRecurrentUseCase) = RecurrentUseCases(updateRecurrentUseCase)
+    fun providesCheckUseCase(
+        repository: RecurrentRepository,
+        preferences: ApplicationPreferences,
+        clock: Clock
+    ) = UpdateRecurrentUseCase(repository, preferences, clock)
+
+    @Provides
+    fun providesRecurrentUseCases(updateRecurrentUseCase: UpdateRecurrentUseCase) =
+        RecurrentUseCases(updateRecurrentUseCase)
 }

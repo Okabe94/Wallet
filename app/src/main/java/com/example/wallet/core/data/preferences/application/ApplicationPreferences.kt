@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.Flow
 interface ApplicationPreferences {
     suspend fun getTheme(): Flow<Theme>
     suspend fun setTheme(theme: Theme)
-    suspend fun getLastDateOpened(): Flow<Long?>
-    suspend fun setLastDateOpened(date: Long)
+    suspend fun getLastUpdated(): Long?
+    suspend fun setLastUpdated(date: Long)
 }

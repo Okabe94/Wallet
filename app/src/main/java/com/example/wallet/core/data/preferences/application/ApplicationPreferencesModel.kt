@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ApplicationPreferencesModel(
-    val lastDateOpened: Long? = null,
+    val lastUpdated: Long? = null,
     val theme: Theme = Theme.DARK
 )
 
