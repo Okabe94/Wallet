@@ -1,12 +1,12 @@
 package com.example.wallet.di
 
-import com.example.wallet.data.datasource.dao.RecurrentDao
-import com.example.wallet.data.datasource.database.ExpenseDatabase
-import com.example.wallet.data.preferences.application.ApplicationPreferences
-import com.example.wallet.data.repository.RecurrentRepositoryImpl
-import com.example.wallet.domain.repository.RecurrentRepository
-import com.example.wallet.domain.usecase.recurrent.CheckUseCase
-import com.example.wallet.domain.usecase.recurrent.RecurrentUseCases
+import com.example.wallet.feature_recurrent.data.datasource.dao.RecurrentDao
+import com.example.wallet.core.data.datasource.database.ExpenseDatabase
+import com.example.wallet.core.data.preferences.application.ApplicationPreferences
+import com.example.wallet.feature_recurrent.data.repository.RecurrentRepositoryImpl
+import com.example.wallet.feature_recurrent.domain.repository.RecurrentRepository
+import com.example.wallet.feature_recurrent.domain.usecase.UpdateRecurrentUseCase
+import com.example.wallet.feature_recurrent.domain.usecase.RecurrentUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,8 +27,8 @@ object MainModule {
     fun providesCheckUseCase(
         repository: RecurrentRepository,
         preferences: ApplicationPreferences
-    ) = CheckUseCase(repository, preferences)
+    ) = UpdateRecurrentUseCase(repository, preferences)
 
     @Provides
-    fun providesRecurrentUseCases(checkUseCase: CheckUseCase) = RecurrentUseCases(checkUseCase)
+    fun providesRecurrentUseCases(updateRecurrentUseCase: UpdateRecurrentUseCase) = RecurrentUseCases(updateRecurrentUseCase)
 }

@@ -1,4 +1,4 @@
-package com.example.wallet.data.util.dispatcher
+package com.example.wallet.feature_add_expense.data.util.dispatcher
 
 import kotlinx.coroutines.Dispatchers
 
