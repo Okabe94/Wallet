@@ -3,12 +3,12 @@ package com.example.wallet.feature_recurrent.domain.usecase
 import android.util.Log
 import com.example.wallet.core.data.preferences.application.ApplicationPreferences
 import com.example.wallet.core.domain.entity.Expense
+import com.example.wallet.feature_recurrent.domain.model.time.Time
+import com.example.wallet.feature_recurrent.domain.model.time.WalletTime
 import com.example.wallet.feature_recurrent.domain.repository.RecurrentRepository
-import com.example.wallet.feature_recurrent.domain.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import java.time.Clock
-import java.time.Instant
 
 private const val TAG = "CHECK_RECURRENT_USE_CASE"
 
@@ -19,14 +19,14 @@ class UpdateRecurrentUseCase(
 ) {
 
     suspend operator fun invoke(scope: CoroutineScope) {
-        val today = standardTime(clock)
+        val today = WalletTime.create(clock)
 
         preferences.getLastUpdated()?.let {
-            val last = standardTime(it)
-            if (daysBetween(last, today) <= 0) return
+            val last = WalletTime.create(it)
+            if (last.daysBetween(today) <= 0) return
         }
 
-        val allPending = recurrentRepository.getPendingRecurrent(today.requiredTime())
+        val allPending = recurrentRepository.getPendingRecurrent(today.getTime())
         if (allPending.isEmpty()) return
 
         updateDueRecurrent(allPending, scope, today)
@@ -35,7 +35,7 @@ class UpdateRecurrentUseCase(
     private suspend fun updateDueRecurrent(
         allPending: List<Expense>,
         scope: CoroutineScope,
-        today: Instant
+        today: Time
     ) {
         val toUpdate = mutableListOf<Expense>()
 
@@ -52,13 +52,13 @@ class UpdateRecurrentUseCase(
         }.onSuccess {
             Log.d(TAG, "Se insertaron todos los valores nuevos")
         }
-        preferences.setLastUpdated(today.requiredTime())
+        preferences.setLastUpdated(today.getTime())
     }
 
-    private fun CoroutineScope.getExpiredAsync(it: Expense, currentDate: Instant) = async {
-        val months = monthsBetween(standardTime(it.createdAt), currentDate)
+    private fun CoroutineScope.getExpiredAsync(it: Expense, currentDate: Time) = async {
+        val months = WalletTime.create(it.createdAt).monthsBetween(currentDate)
         val nextDate = currentDate.nextMonth()
-        it.copy(months = months, updatedUntil = nextDate.requiredTime())
+        it.copy(months = months, updatedUntil = nextDate.getTime())
     }
 
 }

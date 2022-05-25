@@ -22,6 +22,7 @@ import com.example.wallet.R
 import com.example.wallet.core.domain.entity.Expense
 import com.example.wallet.core.presentation.component.AppBaseSurface
 import com.example.wallet.core.presentation.util.navigation.Screen
+import com.example.wallet.feature_recurrent.domain.model.time.WalletTime
 
 @Composable
 @Preview(showBackground = true, name = "Light Mode")
@@ -65,29 +66,34 @@ private fun ExpenseItem(it: Expense, onClick: (Int) -> Unit) {
         backgroundColor = MaterialTheme.colors.surface,
         elevation = 5.dp,
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp, vertical = 5.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            Text(
+        Column {
+            Row(
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 10.dp), text = it.id.toString()
-            )
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = it.amount)
-                if (it.isMonthly) Text(
-                    text = stringResource(id = R.string.monthly),
-                    style = MaterialTheme.typography.caption
+
+                Text(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 10.dp), text = it.id.toString()
                 )
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(text = it.amount)
+                    if (it.isMonthly) Text(
+                        text = stringResource(id = R.string.monthly),
+                        style = MaterialTheme.typography.caption
+                    )
+                }
             }
+            Text(text = "Created at: ${WalletTime.create(it.createdAt).format()}")
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(text = "Next update: ${WalletTime.create(it.updatedUntil).format()}")
         }
     }
 }
