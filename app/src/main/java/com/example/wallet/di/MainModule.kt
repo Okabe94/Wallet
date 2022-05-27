@@ -6,6 +6,7 @@ import com.example.wallet.feature_main.data.datasource.dao.RecurrentDao
 import com.example.wallet.feature_main.data.repository.RecurrentRepositoryImpl
 import com.example.wallet.feature_main.domain.model.time.Time
 import com.example.wallet.feature_main.domain.repository.RecurrentRepository
+import com.example.wallet.feature_main.domain.usecase.GetPendingUpdateUseCase
 import com.example.wallet.feature_main.domain.usecase.RecurrentUseCases
 import com.example.wallet.feature_main.domain.usecase.UpdateRecurrentUseCase
 import dagger.Module
@@ -26,14 +27,24 @@ object MainModule {
     ): RecurrentRepository = RecurrentRepositoryImpl(dao)
 
     @Provides
-    fun providesCheckUseCase(
+    fun providesUpdateRecurrentUseCase(
         repository: RecurrentRepository,
         preferences: ApplicationPreferences,
-        clock: Clock,
         timeManager: Time
-    ) = UpdateRecurrentUseCase(repository, preferences, clock, timeManager)
+    ) = UpdateRecurrentUseCase(repository, preferences, timeManager)
 
     @Provides
-    fun providesRecurrentUseCases(updateRecurrentUseCase: UpdateRecurrentUseCase) =
-        RecurrentUseCases(updateRecurrentUseCase)
+    fun providesGetRecurrentUseCase(
+        repository: RecurrentRepository,
+        preferences: ApplicationPreferences,
+        timeManager: Time,
+        clock: Clock
+    ) = GetPendingUpdateUseCase(repository, preferences, clock, timeManager)
+
+    @Provides
+    fun providesRecurrentUseCases(
+        updateRecurrentUseCase: UpdateRecurrentUseCase,
+        getPendingUpdateUseCase: GetPendingUpdateUseCase
+    ) =
+        RecurrentUseCases(updateRecurrentUseCase, getPendingUpdateUseCase)
 }

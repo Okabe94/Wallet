@@ -16,8 +16,9 @@ class MainViewModel @Inject constructor(
 
     fun checkForRecurring() {
         viewModelScope.launch(dispatcher.io) {
-            recurrentUseCases.updateRecurrent(this)
+            with(recurrentUseCases) {
+                getRecurrent()?.let { updateRecurrent(this@launch, it) }
+            }
         }
     }
-
 }

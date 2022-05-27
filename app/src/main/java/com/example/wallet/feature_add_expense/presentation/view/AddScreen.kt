@@ -2,7 +2,9 @@ package com.example.wallet.feature_add_expense.presentation.view
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
 import androidx.compose.material.MaterialTheme
@@ -34,11 +36,12 @@ private fun AddScreenPreview() = AppBaseSurface { AddScreen(PaddingValues(10.dp)
 fun AddScreen(
     paddingValues: PaddingValues,
     navController: NavController = rememberNavController(),
-    viewModel: AddViewModel = hiltViewModel(),
+    viewModel: AddViewModel = hiltViewModel()
 ): Unit = with(viewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(paddingValues),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically)

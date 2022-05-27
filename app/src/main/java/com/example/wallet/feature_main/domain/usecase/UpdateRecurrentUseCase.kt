@@ -4,43 +4,24 @@ import android.util.Log
 import com.example.wallet.core.data.preferences.application.ApplicationPreferences
 import com.example.wallet.core.domain.entity.Expense
 import com.example.wallet.feature_main.domain.model.time.Time
+import com.example.wallet.feature_main.domain.model.wrapper.UseCaseWrapper
 import com.example.wallet.feature_main.domain.repository.RecurrentRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
-import java.time.Clock
 
 private const val TAG = "CHECK_RECURRENT_USE_CASE"
 
 class UpdateRecurrentUseCase(
     private val recurrentRepository: RecurrentRepository,
     private val preferences: ApplicationPreferences,
-    private val clock: Clock,
     private val timeManager: Time
 ) {
 
-    suspend operator fun invoke(scope: CoroutineScope) {
-        val today = timeManager.now(clock)
-
-        preferences.getLastUpdated()?.let {
-            val last = timeManager.now(it)
-            if (last.daysBetween(today) <= 0) return
-        }
-
-        val allPending = recurrentRepository.getPendingRecurrent(today.getTime())
-        if (allPending.isEmpty()) return
-
-        updateDueRecurrent(allPending, scope, today)
-    }
-
-    private suspend fun updateDueRecurrent(
-        allPending: List<Expense>,
-        scope: CoroutineScope,
-        today: Time
-    ) {
+    suspend operator fun invoke(scope: CoroutineScope, wrapper: UseCaseWrapper) = with(wrapper) {
         val toUpdate = mutableListOf<Expense>()
 
-        allPending.onEach {
-            val updated = scope.getExpiredAsync(it, today)
+        pending.onEach {
+            val updated = scope.formatPendingAsync(it, time)
             toUpdate.add(updated.await())
         }
 
@@ -52,13 +33,12 @@ class UpdateRecurrentUseCase(
         }.onSuccess {
             Log.d(TAG, "Se insertaron todos los valores nuevos")
         }
-        preferences.setLastUpdated(today.getTime())
+        preferences.setLastUpdated(time.getTime())
     }
 
-    private fun CoroutineScope.getExpiredAsync(it: Expense, currentDate: Time) = async {
-        val months = timeManager.now(it.createdAt).monthsBetween(currentDate)
-        val nextDate = currentDate.nextMonth()
+    private fun CoroutineScope.formatPendingAsync(it: Expense, today: Time) = async {
+        val months = timeManager.now(it.createdAt).monthsBetween(today)
+        val nextDate = today.nextMonth()
         it.copy(months = months, updatedUntil = nextDate.getTime())
     }
-
 }
