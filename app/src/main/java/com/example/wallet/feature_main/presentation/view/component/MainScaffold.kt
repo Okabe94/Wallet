@@ -1,4 +1,4 @@
-package com.example.wallet.feature_recurrent.presentation.view.component
+package com.example.wallet.feature_main.presentation.view.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues

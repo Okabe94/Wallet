@@ -1,8 +1,8 @@
-package com.example.wallet.feature_recurrent.data.repository
+package com.example.wallet.feature_main.data.repository
 
 import com.example.wallet.core.domain.entity.Expense
-import com.example.wallet.feature_recurrent.data.datasource.dao.RecurrentDao
-import com.example.wallet.feature_recurrent.domain.repository.RecurrentRepository
+import com.example.wallet.feature_main.data.datasource.dao.RecurrentDao
+import com.example.wallet.feature_main.domain.repository.RecurrentRepository
 import javax.inject.Inject
 
 class RecurrentRepositoryImpl @Inject constructor(

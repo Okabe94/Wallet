@@ -1,4 +1,4 @@
-package com.example.wallet.feature_recurrent.domain.repository
+package com.example.wallet.feature_main.domain.repository
 
 import com.example.wallet.core.domain.entity.Expense
 

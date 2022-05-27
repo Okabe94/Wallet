@@ -1,12 +1,13 @@
 package com.example.wallet.di
 
-import com.example.wallet.feature_recurrent.data.datasource.dao.RecurrentDao
 import com.example.wallet.core.data.datasource.database.ExpenseDatabase
 import com.example.wallet.core.data.preferences.application.ApplicationPreferences
-import com.example.wallet.feature_recurrent.data.repository.RecurrentRepositoryImpl
-import com.example.wallet.feature_recurrent.domain.repository.RecurrentRepository
-import com.example.wallet.feature_recurrent.domain.usecase.UpdateRecurrentUseCase
-import com.example.wallet.feature_recurrent.domain.usecase.RecurrentUseCases
+import com.example.wallet.feature_main.data.datasource.dao.RecurrentDao
+import com.example.wallet.feature_main.data.repository.RecurrentRepositoryImpl
+import com.example.wallet.feature_main.domain.model.time.Time
+import com.example.wallet.feature_main.domain.repository.RecurrentRepository
+import com.example.wallet.feature_main.domain.usecase.RecurrentUseCases
+import com.example.wallet.feature_main.domain.usecase.UpdateRecurrentUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,14 +26,12 @@ object MainModule {
     ): RecurrentRepository = RecurrentRepositoryImpl(dao)
 
     @Provides
-    fun providesClock(): Clock = Clock.systemDefaultZone()
-
-    @Provides
     fun providesCheckUseCase(
         repository: RecurrentRepository,
         preferences: ApplicationPreferences,
-        clock: Clock
-    ) = UpdateRecurrentUseCase(repository, preferences, clock)
+        clock: Clock,
+        timeManager: Time
+    ) = UpdateRecurrentUseCase(repository, preferences, clock, timeManager)
 
     @Provides
     fun providesRecurrentUseCases(updateRecurrentUseCase: UpdateRecurrentUseCase) =

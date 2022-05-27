@@ -1,11 +1,10 @@
-package com.example.wallet.feature_recurrent.domain.usecase
+package com.example.wallet.feature_main.domain.usecase
 
 import android.util.Log
 import com.example.wallet.core.data.preferences.application.ApplicationPreferences
 import com.example.wallet.core.domain.entity.Expense
-import com.example.wallet.feature_recurrent.domain.model.time.Time
-import com.example.wallet.feature_recurrent.domain.model.time.WalletTime
-import com.example.wallet.feature_recurrent.domain.repository.RecurrentRepository
+import com.example.wallet.feature_main.domain.model.time.Time
+import com.example.wallet.feature_main.domain.repository.RecurrentRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import java.time.Clock
@@ -15,14 +14,15 @@ private const val TAG = "CHECK_RECURRENT_USE_CASE"
 class UpdateRecurrentUseCase(
     private val recurrentRepository: RecurrentRepository,
     private val preferences: ApplicationPreferences,
-    private val clock: Clock
+    private val clock: Clock,
+    private val timeManager: Time
 ) {
 
     suspend operator fun invoke(scope: CoroutineScope) {
-        val today = WalletTime.create(clock)
+        val today = timeManager.now(clock)
 
         preferences.getLastUpdated()?.let {
-            val last = WalletTime.create(it)
+            val last = timeManager.now(it)
             if (last.daysBetween(today) <= 0) return
         }
 
@@ -56,7 +56,7 @@ class UpdateRecurrentUseCase(
     }
 
     private fun CoroutineScope.getExpiredAsync(it: Expense, currentDate: Time) = async {
-        val months = WalletTime.create(it.createdAt).monthsBetween(currentDate)
+        val months = timeManager.now(it.createdAt).monthsBetween(currentDate)
         val nextDate = currentDate.nextMonth()
         it.copy(months = months, updatedUntil = nextDate.getTime())
     }

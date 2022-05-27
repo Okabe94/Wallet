@@ -1,4 +1,4 @@
-package com.example.wallet.feature_recurrent.domain.usecase
+package com.example.wallet.feature_main.domain.usecase
 
 data class RecurrentUseCases(
     val updateRecurrent: UpdateRecurrentUseCase

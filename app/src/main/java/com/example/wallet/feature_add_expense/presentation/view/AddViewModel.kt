@@ -8,14 +8,15 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.wallet.core.domain.entity.Expense
 import com.example.wallet.feature_add_expense.data.repository.ExpenseRepositoryImpl
-import com.example.wallet.feature_recurrent.domain.model.time.WalletTime
+import com.example.wallet.feature_main.domain.model.time.Time
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddViewModel @Inject constructor(
-    private val expenseRepository: ExpenseRepositoryImpl
+    private val expenseRepository: ExpenseRepositoryImpl,
+    private val timeManager: Time
 ) : ViewModel() {
 
     var name by mutableStateOf("")
@@ -45,8 +46,12 @@ class AddViewModel @Inject constructor(
     }
 
     fun createNewExpense(navController: NavController) {
+        val today = timeManager.now().getTime()
+        val nextUpdate = timeManager.nextMonth().getTime()
         if (amount.isNotBlank() && name.isNotBlank()) {
-            createExpense(Expense(name, name, isMonthly))
+            createExpense(
+                Expense(name, name, isMonthly, createdAt = today, updatedUntil = nextUpdate)
+            )
             clearFields()
             navController.navigateUp()
         }

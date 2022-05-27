@@ -1,4 +1,4 @@
-package com.example.wallet.feature_recurrent.data.datasource.dao
+package com.example.wallet.feature_main.data.datasource.dao
 
 import androidx.room.Dao
 import androidx.room.Query

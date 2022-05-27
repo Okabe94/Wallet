@@ -4,16 +4,19 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.wallet.core.data.datasource.database.ExpenseDatabase
+import com.example.wallet.core.data.preferences.application.ApplicationPreferences
+import com.example.wallet.core.data.preferences.application.ApplicationPreferencesImpl
 import com.example.wallet.core.data.util.Constants
 import com.example.wallet.core.presentation.util.dispatcher.ApplicationDispatcher
 import com.example.wallet.core.presentation.util.dispatcher.ApplicationDispatcherImpl
-import com.example.wallet.core.data.preferences.application.ApplicationPreferences
-import com.example.wallet.core.data.preferences.application.ApplicationPreferencesImpl
+import com.example.wallet.feature_main.domain.model.time.Time
+import com.example.wallet.feature_main.domain.model.time.WalletTime
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.time.Clock
 import javax.inject.Singleton
 
 @Module
@@ -34,4 +37,10 @@ object AppModule {
 
     @Provides
     fun providesWalletDispatcher(): ApplicationDispatcher = ApplicationDispatcherImpl()
+
+    @Provides
+    fun providesTimeManager(): Time = WalletTime()
+
+    @Provides
+    fun providesClock(): Clock = Clock.systemDefaultZone()
 }

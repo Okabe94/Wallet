@@ -5,8 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.example.wallet.core.presentation.component.AppBaseSurface
-import com.example.wallet.feature_recurrent.presentation.view.MainScreen
-import com.example.wallet.feature_recurrent.presentation.view.MainViewModel
+import com.example.wallet.feature_main.presentation.view.MainScreen
+import com.example.wallet.feature_main.presentation.view.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
