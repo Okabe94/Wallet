@@ -8,9 +8,9 @@ data class Expense(
     val name: String,
     val amount: String,
     val isMonthly: Boolean,
-    val months: Long = 0,
     val createdAt: Long,
     var updatedUntil: Long,
+    val months: Long = 0,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 )
