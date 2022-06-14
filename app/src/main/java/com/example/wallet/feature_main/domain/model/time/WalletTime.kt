@@ -5,14 +5,15 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
+import javax.inject.Inject
 
-class WalletTime : Time {
+class WalletTime @Inject constructor(
+    private val clock: Clock
+) : Time {
 
     private var dateTime: ZonedDateTime? = null
 
-    override fun now() = apply { dateTime = ZonedDateTime.now() }
-
-    override fun now(clock: Clock) = apply { dateTime = ZonedDateTime.now(clock) }
+    override fun now() = apply { dateTime = ZonedDateTime.now(clock) }
 
     override fun now(time: Long) = apply { dateTime = zonedFromTime(time) }
 

@@ -8,10 +8,11 @@ import com.example.wallet.feature_main.domain.model.wrapper.UseCaseWrapper
 import com.example.wallet.feature_main.domain.repository.RecurrentRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
+import javax.inject.Inject
 
-private const val TAG = "CHECK_RECURRENT_USE_CASE"
+private const val TAG = "UPDATE_RECURRENT_USE_CASE"
 
-class UpdateRecurrentUseCase(
+class UpdateRecurrentUseCase @Inject constructor(
     private val recurrentRepository: RecurrentRepository,
     private val preferences: ApplicationPreferences,
     private val timeManager: Time

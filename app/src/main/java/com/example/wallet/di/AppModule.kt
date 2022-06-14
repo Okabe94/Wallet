@@ -22,6 +22,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
     @Provides
     @Singleton
     fun providesExpensesDatabase(app: Application) = Room
@@ -39,7 +40,7 @@ object AppModule {
     fun providesWalletDispatcher(): ApplicationDispatcher = ApplicationDispatcherImpl()
 
     @Provides
-    fun providesTimeManager(): Time = WalletTime()
+    fun providesTimeManager(clock: Clock): Time = WalletTime(clock)
 
     @Provides
     fun providesClock(): Clock = Clock.systemDefaultZone()

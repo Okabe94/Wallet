@@ -1,59 +1,50 @@
 package com.example.wallet.feature_add_expense.presentation.view
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.wallet.core.domain.entity.Expense
-import com.example.wallet.feature_add_expense.data.repository.ExpenseRepositoryImpl
-import com.example.wallet.feature_main.domain.model.time.Time
+import com.example.wallet.core.presentation.util.dispatcher.ApplicationDispatcher
+import com.example.wallet.feature_add_expense.domain.usecase.AddUseCases
+import com.example.wallet.feature_add_expense.presentation.state.AddExpenseEvent
+import com.example.wallet.feature_add_expense.presentation.state.AddExpenseState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddViewModel @Inject constructor(
-    private val expenseRepository: ExpenseRepositoryImpl,
-    private val timeManager: Time
+    private val useCases: AddUseCases,
+    private val dispatcher: ApplicationDispatcher
 ) : ViewModel() {
 
-    var name by mutableStateOf("")
-    var amount by mutableStateOf("")
-    var isMonthly by mutableStateOf(false)
+    private val _state = mutableStateOf(AddExpenseState())
+    val state: State<AddExpenseState> = _state
 
-    private fun clearFields() {
-        name = ""
-        amount = ""
-        isMonthly = false
-    }
-
-    private fun createExpense(expense: Expense) = viewModelScope.launch {
-        expenseRepository.createExpense(expense)
-    }
-
-    fun onNameChange(text: String) {
-        name = text
-    }
-
-    fun onAmountChange(text: String) {
-        amount = text
-    }
-
-    fun onMonthlyChange(checked: Boolean) {
-        isMonthly = checked
+    fun onEvent(event: AddExpenseEvent) {
+        when (event) {
+            is AddExpenseEvent.AmountChange -> _state.value =
+                _state.value.copy(amount = event.amount)
+            is AddExpenseEvent.MonthlyChange -> _state.value =
+                _state.value.copy(isMonthly = event.monthly)
+            is AddExpenseEvent.NameChange ->
+                _state.value = _state.value.copy(name = event.name)
+            AddExpenseEvent.Save -> {
+                viewModelScope.launch(dispatcher.io) {
+                    useCases.addExpense(_state.value)
+                }
+            }
+        }
     }
 
     fun createNewExpense(navController: NavController) {
-        val today = timeManager.now().getTime()
-        val nextUpdate = timeManager.nextMonth().getTime()
-        if (amount.isNotBlank() && name.isNotBlank()) {
-            createExpense(
-                Expense(name, name, isMonthly, createdAt = today, updatedUntil = nextUpdate)
-            )
-            clearFields()
-            navController.navigateUp()
+        viewModelScope.launch(dispatcher.io) {
+//            useCases.addExpense(_name.value, _amount, _isMonthly)
+//            val isValid = useCases.addExpense(_name.value, _amount, _isMonthly)
+//            if (isValid) {
+//                clearFields()
+//                navController.navigateUp()
+//            }
         }
     }
 }

@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.wallet.R
 import com.example.wallet.core.presentation.component.AppBaseSurface
 import com.example.wallet.core.presentation.component.WalletInputText
+import com.example.wallet.feature_add_expense.presentation.state.AddExpenseEvent
 
 @Composable
 @Preview(name = "Light mode", showBackground = true)
@@ -37,7 +38,7 @@ fun AddScreen(
     paddingValues: PaddingValues,
     navController: NavController = rememberNavController(),
     viewModel: AddViewModel = hiltViewModel()
-): Unit = with(viewModel) {
+): Unit = with(viewModel.state.value) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,7 +59,8 @@ fun AddScreen(
                 imeAction = ImeAction.Next,
                 autoCorrect = true
             ),
-            onChange = ::onNameChange
+            onChange = { viewModel.onEvent(AddExpenseEvent.NameChange(it)) }
+
         )
         WalletInputText(
             name = stringResource(R.string.amount),
@@ -69,7 +71,7 @@ fun AddScreen(
             ),
             leadingIcon = Icons.Default.AccountCircle,
 //            visualTransformation = CurrencyTransformation(),
-            onChange = ::onAmountChange
+            onChange = { viewModel.onEvent(AddExpenseEvent.AmountChange(it)) }
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -79,10 +81,10 @@ fun AddScreen(
             Text(text = stringResource(R.string.monthly))
             Checkbox(
                 checked = isMonthly,
-                onCheckedChange = ::onMonthlyChange
+                onCheckedChange = { viewModel.onEvent(AddExpenseEvent.MonthlyChange(it)) }
             )
         }
-        Button(onClick = { createNewExpense(navController) }) {
+        Button(onClick = { viewModel.onEvent(AddExpenseEvent.Save) }) {
             Text(text = stringResource(R.string.create))
         }
     }
