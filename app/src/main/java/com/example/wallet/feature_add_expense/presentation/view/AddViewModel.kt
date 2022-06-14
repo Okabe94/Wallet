@@ -1,13 +1,13 @@
 package com.example.wallet.feature_add_expense.presentation.view
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.wallet.core.presentation.util.dispatcher.ApplicationDispatcher
 import com.example.wallet.feature_add_expense.domain.usecase.AddUseCases
+import com.example.wallet.feature_add_expense.presentation.state.AddExpenseEvent
+import com.example.wallet.feature_add_expense.presentation.state.AddExpenseState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,40 +18,33 @@ class AddViewModel @Inject constructor(
     private val dispatcher: ApplicationDispatcher
 ) : ViewModel() {
 
-    private val _name = mutableStateOf("")
-    var name = _name.value
+    private val _state = mutableStateOf(AddExpenseState())
+    val state: State<AddExpenseState> = _state
 
-    private var _amount by mutableStateOf("")
-    var amount = _amount
-
-    private var _isMonthly by mutableStateOf(false)
-    var isMonthly = _isMonthly
-
-    private fun clearFields() {
-        _name.value = ""
-        _amount = ""
-        _isMonthly = false
-    }
-
-    fun onNameChange(text: String) {
-        _name.value = text
-    }
-
-    fun onAmountChange(text: String) {
-        _amount = text
-    }
-
-    fun onMonthlyChange(checked: Boolean) {
-        _isMonthly = checked
+    fun onEvent(event: AddExpenseEvent) {
+        when (event) {
+            is AddExpenseEvent.AmountChange -> _state.value =
+                _state.value.copy(amount = event.amount)
+            is AddExpenseEvent.MonthlyChange -> _state.value =
+                _state.value.copy(isMonthly = event.monthly)
+            is AddExpenseEvent.NameChange ->
+                _state.value = _state.value.copy(name = event.name)
+            AddExpenseEvent.Save -> {
+                viewModelScope.launch(dispatcher.io) {
+                    useCases.addExpense(_state.value)
+                }
+            }
+        }
     }
 
     fun createNewExpense(navController: NavController) {
         viewModelScope.launch(dispatcher.io) {
-            val isValid = useCases.addExpense(_name.value, _amount, _isMonthly)
-            if (isValid) {
-                clearFields()
-                navController.navigateUp()
-            }
+//            useCases.addExpense(_name.value, _amount, _isMonthly)
+//            val isValid = useCases.addExpense(_name.value, _amount, _isMonthly)
+//            if (isValid) {
+//                clearFields()
+//                navController.navigateUp()
+//            }
         }
     }
 }

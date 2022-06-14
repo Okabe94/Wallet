@@ -18,6 +18,10 @@ import java.time.Clock
 @Module
 @InstallIn(ViewModelComponent::class)
 object MainModule {
+
+    @Provides
+    fun providesExpenseDao(db: ExpenseDatabase) = db.expenseDao()
+
     @Provides
     fun providesRecurrentDao(db: ExpenseDatabase) = db.recurrentDao()
 
