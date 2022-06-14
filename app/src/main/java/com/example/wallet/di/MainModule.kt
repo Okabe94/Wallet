@@ -21,8 +21,7 @@ object MainModule {
     @Provides
     fun providesRecurrentDao(db: ExpenseDatabase) = db.recurrentDao()
 
-    @Provides
-    fun providesRecurrentRepository(
+    @Provides fun providesRecurrentRepository(
         dao: RecurrentDao
     ): RecurrentRepository = RecurrentRepositoryImpl(dao)
 
@@ -34,17 +33,15 @@ object MainModule {
     ) = UpdateRecurrentUseCase(repository, preferences, timeManager)
 
     @Provides
-    fun providesGetRecurrentUseCase(
+    fun providesGetPendingUpdateUseCase(
         repository: RecurrentRepository,
         preferences: ApplicationPreferences,
-        timeManager: Time,
-        clock: Clock
-    ) = GetPendingUpdateUseCase(repository, preferences, clock, timeManager)
+        timeManager: Time
+    ) = GetPendingUpdateUseCase(repository, preferences, timeManager)
 
     @Provides
     fun providesRecurrentUseCases(
         updateRecurrentUseCase: UpdateRecurrentUseCase,
         getPendingUpdateUseCase: GetPendingUpdateUseCase
-    ) =
-        RecurrentUseCases(updateRecurrentUseCase, getPendingUpdateUseCase)
+    ) = RecurrentUseCases(updateRecurrentUseCase, getPendingUpdateUseCase)
 }

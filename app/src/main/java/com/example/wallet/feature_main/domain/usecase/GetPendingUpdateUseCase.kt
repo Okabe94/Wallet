@@ -4,17 +4,16 @@ import com.example.wallet.core.data.preferences.application.ApplicationPreferenc
 import com.example.wallet.feature_main.domain.model.time.Time
 import com.example.wallet.feature_main.domain.model.wrapper.UseCaseWrapper
 import com.example.wallet.feature_main.domain.repository.RecurrentRepository
-import java.time.Clock
 import javax.inject.Inject
 
 class GetPendingUpdateUseCase @Inject constructor(
     private val recurrentRepository: RecurrentRepository,
     private val preferences: ApplicationPreferences,
-    private val clock: Clock,
     private val timeManager: Time
 ) {
+
     suspend operator fun invoke(): UseCaseWrapper? {
-        val today = timeManager.now(clock)
+        val today = timeManager.now()
 
         preferences.getLastUpdated()?.let {
             val last = timeManager.now(it)
@@ -25,4 +24,5 @@ class GetPendingUpdateUseCase @Inject constructor(
         if (pending.isEmpty()) return null
         return UseCaseWrapper(today, pending)
     }
+
 }

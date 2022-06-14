@@ -3,8 +3,9 @@ package com.example.wallet.feature_add_expense.domain.usecase
 import com.example.wallet.core.domain.entity.Expense
 import com.example.wallet.feature_add_expense.domain.repository.ExpenseRepository
 import com.example.wallet.feature_main.domain.model.time.Time
+import javax.inject.Inject
 
-data class AddExpenseUseCase(
+data class AddExpenseUseCase @Inject constructor(
     private val expenseRepository: ExpenseRepository,
     private val timeManager: Time
 ) {
