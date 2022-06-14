@@ -1,17 +1,23 @@
 package com.example.wallet.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
-import com.example.wallet.data.dao.ExpenseDao
-import com.example.wallet.data.database.ExpenseDatabase
-import com.example.wallet.data.repository.ExpenseRepository
+import com.example.wallet.core.data.datasource.database.ExpenseDatabase
+import com.example.wallet.core.data.preferences.application.ApplicationPreferences
+import com.example.wallet.core.data.preferences.application.ApplicationPreferencesImpl
+import com.example.wallet.core.data.util.Constants
+import com.example.wallet.core.presentation.util.dispatcher.ApplicationDispatcher
+import com.example.wallet.core.presentation.util.dispatcher.ApplicationDispatcherImpl
+import com.example.wallet.feature_main.domain.model.time.Time
+import com.example.wallet.feature_main.domain.model.time.WalletTime
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.time.Clock
 import javax.inject.Singleton
-
-private const val DB_NAME = "Expenses_database"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -20,13 +26,22 @@ object AppModule {
     @Provides
     @Singleton
     fun providesExpensesDatabase(app: Application) = Room
-        .databaseBuilder(app, ExpenseDatabase::class.java, DB_NAME)
+        .databaseBuilder(app, ExpenseDatabase::class.java, Constants.DB_NAME)
         .fallbackToDestructiveMigration()
         .build()
 
     @Provides
-    fun providesExpenseDao(db: ExpenseDatabase) = db.expenseDao()
+    @Singleton
+    fun providesPreferences(
+        @ApplicationContext context: Context
+    ): ApplicationPreferences = ApplicationPreferencesImpl(context)
 
     @Provides
-    fun providesExpenseRepository(dao: ExpenseDao) = ExpenseRepository(dao)
+    fun providesWalletDispatcher(): ApplicationDispatcher = ApplicationDispatcherImpl()
+
+    @Provides
+    fun providesTimeManager(clock: Clock): Time = WalletTime(clock)
+
+    @Provides
+    fun providesClock(): Clock = Clock.systemDefaultZone()
 }
