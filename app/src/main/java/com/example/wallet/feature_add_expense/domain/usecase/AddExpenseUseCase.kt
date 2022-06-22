@@ -3,7 +3,7 @@ package com.example.wallet.feature_add_expense.domain.usecase
 import com.example.wallet.core.domain.entity.Expense
 import com.example.wallet.feature_add_expense.domain.repository.CreateExpenseRepository
 import com.example.wallet.feature_add_expense.presentation.state.AddExpenseState
-import com.example.wallet.feature_main.domain.model.time.Time
+import com.example.wallet.feature_main.data.time.Time
 import javax.inject.Inject
 
 data class AddExpenseUseCase @Inject constructor(

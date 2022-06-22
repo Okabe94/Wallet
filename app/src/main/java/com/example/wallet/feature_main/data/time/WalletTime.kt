@@ -1,4 +1,4 @@
-package com.example.wallet.feature_main.domain.model.time
+package com.example.wallet.feature_main.data.time
 
 import java.time.Clock
 import java.time.Instant
@@ -7,9 +7,7 @@ import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
-class WalletTime @Inject constructor(
-    private val clock: Clock
-) : Time {
+class WalletTime @Inject constructor(private val clock: Clock) : Time {
 
     private var dateTime: ZonedDateTime? = null
 

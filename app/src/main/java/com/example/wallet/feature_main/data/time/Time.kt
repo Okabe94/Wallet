@@ -1,4 +1,4 @@
-package com.example.wallet.feature_main.domain.model.time
+package com.example.wallet.feature_main.data.time
 
 interface Time {
     fun now(): Time

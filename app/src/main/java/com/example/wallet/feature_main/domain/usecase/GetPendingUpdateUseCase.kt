@@ -1,8 +1,8 @@
 package com.example.wallet.feature_main.domain.usecase
 
 import com.example.wallet.core.data.preferences.application.ApplicationPreferences
-import com.example.wallet.feature_main.domain.model.time.Time
-import com.example.wallet.feature_main.domain.model.wrapper.UseCaseWrapper
+import com.example.wallet.feature_main.data.time.Time
+import com.example.wallet.feature_main.domain.model.UseCaseWrapper
 import com.example.wallet.feature_main.domain.repository.RecurrentRepository
 import javax.inject.Inject
 
