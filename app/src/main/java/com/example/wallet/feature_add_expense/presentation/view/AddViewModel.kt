@@ -1,9 +1,9 @@
 package com.example.wallet.feature_add_expense.presentation.view
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.example.wallet.core.presentation.util.dispatcher.ApplicationDispatcher
 import com.example.wallet.feature_add_expense.domain.usecase.AddUseCases
 import com.example.wallet.feature_add_expense.presentation.state.AddExpenseEvent
@@ -29,22 +29,9 @@ class AddViewModel @Inject constructor(
                 _state.value.copy(isMonthly = event.monthly)
             is AddExpenseEvent.NameChange ->
                 _state.value = _state.value.copy(name = event.name)
-            AddExpenseEvent.Save -> {
-                viewModelScope.launch(dispatcher.io) {
-                    useCases.addExpense(_state.value)
-                }
+            AddExpenseEvent.Save -> viewModelScope.launch(dispatcher.IO) {
+                useCases.addExpense(_state.value)
             }
-        }
-    }
-
-    fun createNewExpense(navController: NavController) {
-        viewModelScope.launch(dispatcher.io) {
-//            useCases.addExpense(_name.value, _amount, _isMonthly)
-//            val isValid = useCases.addExpense(_name.value, _amount, _isMonthly)
-//            if (isValid) {
-//                clearFields()
-//                navController.navigateUp()
-//            }
         }
     }
 }
