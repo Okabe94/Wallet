@@ -9,8 +9,8 @@ import com.example.wallet.core.data.preferences.application.ApplicationPreferenc
 import com.example.wallet.core.data.util.Constants
 import com.example.wallet.core.presentation.util.dispatcher.ApplicationDispatcher
 import com.example.wallet.core.presentation.util.dispatcher.ApplicationDispatcherImpl
-import com.example.wallet.feature_main.data.time.DefaultTimeManager
-import com.example.wallet.feature_main.domain.time.TimeManager
+import com.example.wallet.feature_main.data.time.DefaultTimeProvider
+import com.example.wallet.feature_main.domain.time.TimeProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,5 +39,5 @@ object AppModule {
     fun providesWalletDispatcher(): ApplicationDispatcher = ApplicationDispatcherImpl()
 
     @Provides
-    fun providesTimeManager(): TimeManager = DefaultTimeManager()
+    fun providesTimeManager(): TimeProvider = DefaultTimeProvider()
 }

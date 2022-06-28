@@ -6,7 +6,7 @@ import com.example.wallet.core.domain.entity.Expense
 import com.example.wallet.feature_main.domain.model.wrapper.UseCaseWrapper
 import com.example.wallet.feature_main.domain.repository.RecurrentRepository
 import com.example.wallet.feature_main.domain.time.Time
-import com.example.wallet.feature_main.domain.time.TimeManager
+import com.example.wallet.feature_main.domain.time.TimeProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import javax.inject.Inject
@@ -16,7 +16,7 @@ private const val TAG = "UPDATE_RECURRENT_USE_CASE"
 class UpdateRecurrentUseCase @Inject constructor(
     private val recurrentRepository: RecurrentRepository,
     private val preferences: ApplicationPreferences,
-    private val timeManager: TimeManager
+    private val timeProvider: TimeProvider
 ) {
 
     suspend operator fun invoke(scope: CoroutineScope, wrapper: UseCaseWrapper) = with(wrapper) {
@@ -39,8 +39,8 @@ class UpdateRecurrentUseCase @Inject constructor(
     }
 
     private fun CoroutineScope.formatPendingAsync(it: Expense, today: Time) = async {
-        val now = timeManager.now(it.createdAt)
-        val months = timeManager.monthsBetween(now, today)
+        val now = timeProvider.now(it.createdAt)
+        val months = timeProvider.monthsBetween(now, today)
         val nextDate = today.rollMonths()
         it.copy(months = months, updatedUntil = nextDate.millis())
     }
