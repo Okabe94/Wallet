@@ -3,9 +3,10 @@ package com.example.wallet.feature_main.domain.usecase
 import android.util.Log
 import com.example.wallet.core.data.preferences.application.ApplicationPreferences
 import com.example.wallet.core.domain.entity.Expense
-import com.example.wallet.feature_main.domain.model.time.Time
 import com.example.wallet.feature_main.domain.model.wrapper.UseCaseWrapper
 import com.example.wallet.feature_main.domain.repository.RecurrentRepository
+import com.example.wallet.feature_main.domain.time.Time
+import com.example.wallet.feature_main.domain.time.TimeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import javax.inject.Inject
@@ -15,7 +16,7 @@ private const val TAG = "UPDATE_RECURRENT_USE_CASE"
 class UpdateRecurrentUseCase @Inject constructor(
     private val recurrentRepository: RecurrentRepository,
     private val preferences: ApplicationPreferences,
-    private val timeManager: Time
+    private val timeManager: TimeManager
 ) {
 
     suspend operator fun invoke(scope: CoroutineScope, wrapper: UseCaseWrapper) = with(wrapper) {
@@ -34,12 +35,13 @@ class UpdateRecurrentUseCase @Inject constructor(
         }.onSuccess {
             Log.d(TAG, "Se insertaron todos los valores nuevos")
         }
-        preferences.setLastUpdated(time.getTime())
+        preferences.setLastUpdated(time.millis())
     }
 
     private fun CoroutineScope.formatPendingAsync(it: Expense, today: Time) = async {
-        val months = timeManager.now(it.createdAt).monthsBetween(today)
-        val nextDate = today.nextMonth()
-        it.copy(months = months, updatedUntil = nextDate.getTime())
+        val now = timeManager.now(it.createdAt)
+        val months = timeManager.monthsBetween(now, today)
+        val nextDate = today.rollMonths()
+        it.copy(months = months, updatedUntil = nextDate.millis())
     }
 }
