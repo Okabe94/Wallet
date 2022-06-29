@@ -5,7 +5,8 @@ import com.example.wallet.core.data.preferences.application.ApplicationPreferenc
 import com.example.wallet.feature_main.data.datasource.dao.RecurrentDao
 import com.example.wallet.feature_main.data.repository.RecurrentRepositoryImpl
 import com.example.wallet.feature_main.domain.repository.RecurrentRepository
-import com.example.wallet.feature_main.domain.time.TimeManager
+import com.example.wallet.feature_main.domain.time.TimeComparator
+import com.example.wallet.feature_main.domain.time.TimeProvider
 import com.example.wallet.feature_main.domain.usecase.GetPendingUpdateUseCase
 import com.example.wallet.feature_main.domain.usecase.RecurrentUseCases
 import com.example.wallet.feature_main.domain.usecase.UpdateRecurrentUseCase
@@ -32,15 +33,17 @@ object MainModule {
     fun providesUpdateRecurrentUseCase(
         repository: RecurrentRepository,
         preferences: ApplicationPreferences,
-        timeManager: TimeManager
-    ) = UpdateRecurrentUseCase(repository, preferences, timeManager)
+        timeProvider: TimeProvider,
+        timeComparator: TimeComparator
+    ) = UpdateRecurrentUseCase(repository, preferences, timeProvider, timeComparator)
 
     @Provides
     fun providesGetPendingUpdateUseCase(
         repository: RecurrentRepository,
         preferences: ApplicationPreferences,
-        timeManager: TimeManager
-    ) = GetPendingUpdateUseCase(repository, preferences, timeManager)
+        timeProvider: TimeProvider,
+        timeComparator: TimeComparator
+    ) = GetPendingUpdateUseCase(repository, preferences, timeProvider, timeComparator)
 
     @Provides
     fun providesRecurrentUseCases(
