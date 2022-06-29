@@ -9,13 +9,16 @@ import com.example.wallet.core.data.preferences.application.ApplicationPreferenc
 import com.example.wallet.core.data.util.Constants
 import com.example.wallet.core.presentation.util.dispatcher.ApplicationDispatcher
 import com.example.wallet.core.presentation.util.dispatcher.ApplicationDispatcherImpl
+import com.example.wallet.feature_main.data.time.DefaultTimeComparator
 import com.example.wallet.feature_main.data.time.DefaultTimeProvider
+import com.example.wallet.feature_main.domain.time.TimeComparator
 import com.example.wallet.feature_main.domain.time.TimeProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.time.Clock
 import javax.inject.Singleton
 
 @Module
@@ -39,5 +42,12 @@ object AppModule {
     fun providesWalletDispatcher(): ApplicationDispatcher = ApplicationDispatcherImpl()
 
     @Provides
-    fun providesTimeManager(): TimeProvider = DefaultTimeProvider()
+    fun providesDefaultClock(): Clock = Clock.systemDefaultZone()
+
+    @Provides
+    fun providesTimeProvider(clock: Clock): TimeProvider = DefaultTimeProvider(clock)
+
+    @Provides
+    @Singleton
+    fun providesTimeComparator(): TimeComparator = DefaultTimeComparator()
 }

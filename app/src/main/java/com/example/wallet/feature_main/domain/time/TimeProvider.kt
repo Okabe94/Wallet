@@ -2,10 +2,8 @@ package com.example.wallet.feature_main.domain.time
 
 import java.time.Clock
 
-interface TimeProvider {
-    fun now(): Time
-    fun now(millis: Long): Time
-    fun now(clock: Clock): Time
-    fun daysBetween(a: Time, b: Time): Long
-    fun monthsBetween(a: Time, b: Time): Long
+abstract class TimeProvider(protected val clock: Clock) {
+    abstract fun now(): Time
+    abstract fun now(millis: Long): Time
+    abstract fun now(clock: Clock): Time
 }

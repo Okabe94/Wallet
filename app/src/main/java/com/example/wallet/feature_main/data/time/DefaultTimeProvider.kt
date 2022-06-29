@@ -9,22 +9,14 @@ import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
-class DefaultTimeProvider @Inject constructor() : TimeProvider {
+class DefaultTimeProvider @Inject constructor(clock: Clock) : TimeProvider(clock) {
+
+    override fun now(): Time = DefaultTime(clock)
 
     override fun now(clock: Clock): Time = DefaultTime(clock)
 
-    override fun now(): Time = DefaultTime(Clock.systemDefaultZone())
-
     override fun now(millis: Long): Time =
         DefaultTime(Clock.fixed(Instant.ofEpochMilli(millis), ZoneId.systemDefault()))
-
-    override fun daysBetween(a: Time, b: Time) = ChronoUnit.DAYS.between(
-        Instant.ofEpochMilli(a.millis()), Instant.ofEpochMilli(b.millis())
-    )
-
-    override fun monthsBetween(a: Time, b: Time) = ChronoUnit.MONTHS.between(
-        Instant.ofEpochMilli(a.millis()), Instant.ofEpochMilli(b.millis())
-    )
 
     internal class DefaultTime @Inject constructor(clock: Clock) : Time {
 
@@ -35,8 +27,8 @@ class DefaultTimeProvider @Inject constructor() : TimeProvider {
         override fun millis() = dateTime.toInstant().toEpochMilli()
 
         override fun rollMonths(months: Long): Time {
-            val clock = Clock.fixed(dateTime.plusMonths(months).toInstant(), ZoneId.systemDefault())
-            return DefaultTime(clock)
+            val nextDate = dateTime.plusMonths(months).toInstant()
+            return DefaultTime(Clock.fixed(nextDate, ZoneId.systemDefault()))
         }
     }
 }
