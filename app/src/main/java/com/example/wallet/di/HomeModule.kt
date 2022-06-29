@@ -6,7 +6,7 @@ import com.example.wallet.feature_add_expense.domain.usecase.AddExpenseUseCase
 import com.example.wallet.feature_add_expense.domain.usecase.AddUseCases
 import com.example.wallet.feature_home.data.repository.HomeExpenseRepositoryImpl
 import com.example.wallet.feature_home.domain.repository.HomeExpenseRepository
-import com.example.wallet.feature_main.data.time.Time
+import com.example.wallet.feature_main.domain.time.TimeManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +24,7 @@ object HomeModule {
     @Provides
     fun providesAddUseCase(
         repository: CreateExpenseRepository,
-        timeManager: Time
+        timeManager: TimeManager
     ) = AddExpenseUseCase(repository, timeManager)
 
     @Provides
