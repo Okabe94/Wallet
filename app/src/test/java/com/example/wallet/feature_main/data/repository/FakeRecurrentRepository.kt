@@ -13,7 +13,6 @@ class FakeRecurrentRepository(private val list: List<Expense>) : RecurrentReposi
     }
 
     override suspend fun getPendingRecurrent(today: Long) = list.filter {
-        println(today)
-        it.updatedUntil < today
+        it.updatedUntil < today && it.isMonthly
     }
 }

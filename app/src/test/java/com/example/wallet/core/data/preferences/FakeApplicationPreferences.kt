@@ -4,21 +4,21 @@ import com.example.wallet.core.data.preferences.application.ApplicationPreferenc
 import com.example.wallet.core.data.preferences.application.Theme
 import kotlinx.coroutines.flow.flow
 
-class FakeApplicationPreferences : ApplicationPreferences {
-
-    private var theme = Theme.LIGHT
-    private var lastUpdate: Long? = null
+class FakeApplicationPreferences(
+    private var last: Long? = null,
+    private var theme: Theme = Theme.LIGHT
+) : ApplicationPreferences {
 
     override suspend fun getTheme() = flow { emit(theme) }
+
+    override suspend fun getLastUpdated() = last
 
     override suspend fun setTheme(theme: Theme) {
         this.theme = theme
     }
 
-    override suspend fun getLastUpdated(): Long? = null
-
     override suspend fun setLastUpdated(date: Long) {
-        lastUpdate = date
+        last = date
     }
 
 }
