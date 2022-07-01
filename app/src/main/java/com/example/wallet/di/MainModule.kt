@@ -25,7 +25,8 @@ object MainModule {
     @Provides
     fun providesRecurrentDao(db: ExpenseDatabase) = db.recurrentDao()
 
-    @Provides fun providesRecurrentRepository(
+    @Provides
+    fun providesRecurrentRepository(
         dao: RecurrentDao
     ): RecurrentRepository = RecurrentRepositoryImpl(dao)
 

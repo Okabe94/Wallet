@@ -9,11 +9,9 @@ import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
-class DefaultTimeProvider : TimeProvider {
+class DefaultTimeProvider @Inject constructor(private val clock: Clock) : TimeProvider {
 
-    override fun now(): Time = DefaultTime(Clock.systemDefaultZone())
-
-    override fun now(clock: Clock): Time = DefaultTime(clock)
+    override fun now(): Time = DefaultTime(clock)
 
     override fun now(millis: Long): Time = DefaultTime(
         Clock.fixed(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
