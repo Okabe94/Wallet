@@ -30,8 +30,8 @@ class GetPendingUpdateUseCaseTest {
 
     @Before
     fun setUp() {
+        fakeTimeComparator = FakeTimeComparator()
         fakePreferences = FakeApplicationPreferences()
-        fakeTimeComparator = FakeTimeComparator(0, 0)
         fakeRepository = FakeRecurrentRepository(createDummyData())
     }
 
@@ -66,18 +66,17 @@ class GetPendingUpdateUseCaseTest {
     }
 
     @Test
-    fun `Months elapsed - With preferences, get expenses`(): Unit =
-        runBlocking {
-            val timeProvider = createFakeTimeProvider(MONTH3)
-            val useCase = createGetPendingUpdateUseCase(
-                timeProvider,
-                preferences = FakeApplicationPreferences(timeProvider.now().millis()),
-                comparator = FakeTimeComparator(2)
-            )
-            val response = useCase()
-            assertThat(response).isNotNull()
-            assertThat(response).isNotEmpty()
-        }
+    fun `Months elapsed - With preferences, get expenses`(): Unit = runBlocking {
+        val timeProvider = createFakeTimeProvider(MONTH3)
+        val useCase = createGetPendingUpdateUseCase(
+            timeProvider,
+            preferences = FakeApplicationPreferences(timeProvider.now().millis()),
+            comparator = FakeTimeComparator(2)
+        )
+        val response = useCase()
+        assertThat(response).isNotNull()
+        assertThat(response).isNotEmpty()
+    }
 
     @Test
     fun `Getting No expenses, different day from last in preferences, successful`(): Unit =
