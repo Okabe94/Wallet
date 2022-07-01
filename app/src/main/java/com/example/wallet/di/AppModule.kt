@@ -42,8 +42,11 @@ object AppModule {
     fun providesWalletDispatcher(): ApplicationDispatcher = ApplicationDispatcherImpl()
 
     @Provides
+    fun providesDefaultClock(): Clock = Clock.systemDefaultZone()
+
+    @Provides
     @Singleton
-    fun providesTimeProvider(): TimeProvider = DefaultTimeProvider()
+    fun providesTimeProvider(clock: Clock): TimeProvider = DefaultTimeProvider(clock)
 
     @Provides
     @Singleton
