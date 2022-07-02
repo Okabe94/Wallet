@@ -1,6 +1,5 @@
 package com.example.wallet.feature_main.domain.usecase
 
-import android.util.Log
 import com.example.wallet.core.data.preferences.application.ApplicationPreferences
 import com.example.wallet.core.domain.entity.Expense
 import com.example.wallet.feature_main.domain.repository.RecurrentRepository
@@ -9,8 +8,6 @@ import com.example.wallet.feature_main.domain.time.TimeProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import javax.inject.Inject
-
-private const val TAG = "UPDATE_RECURRENT_USE_CASE"
 
 class UpdateRecurrentUseCase @Inject constructor(
     private val recurrentRepository: RecurrentRepository,
@@ -32,11 +29,8 @@ class UpdateRecurrentUseCase @Inject constructor(
         runCatching {
             recurrentRepository.updateRecurrent(toUpdate)
         }.onFailure {
-            Log.e(TAG, "Error insertando los valores nuevos recurrentes")
-            Log.e(TAG, it.message, it.cause)
-        }.onSuccess {
-            Log.d(TAG, "Se insertaron todos los valores nuevos")
-        }
+            throw it
+        }.onSuccess { }
         preferences.setLastUpdated(today.millis())
     }
 
@@ -44,6 +38,6 @@ class UpdateRecurrentUseCase @Inject constructor(
         val previousUpdate = timeProvider.now(it.createdAt)
         val months = timeComparator.monthsBetween(previousUpdate, today)
         val nextDate = today.rollMonths()
-        it.copy(months = months, updatedUntil = nextDate.millis())
+        it.copy(months = months + it.months, updatedUntil = nextDate.millis())
     }
 }
