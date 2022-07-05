@@ -19,7 +19,6 @@ import java.time.Instant
 import java.time.ZoneOffset
 
 private const val MONTH1 = "2020-01-20T10:05:00Z"
-private const val MONTH2 = "2020-02-20T10:05:00Z"
 
 class UpdateRecurrentUseCaseTest {
 
@@ -67,7 +66,7 @@ class UpdateRecurrentUseCaseTest {
 
         assertThat(dummyData.size).isEqualTo(newList.size)
         repeat(dummyData.size) {
-            assertThat(dummyData[it].updatedUntil).isNotEqualTo(newList[it].updatedUntil)
+            assertThat(dummyData[it].updatedUntil).isLessThan(newList[it].updatedUntil)
         }
     }
 
