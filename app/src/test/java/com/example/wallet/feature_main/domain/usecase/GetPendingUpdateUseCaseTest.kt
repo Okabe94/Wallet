@@ -3,6 +3,10 @@ package com.example.wallet.feature_main.domain.usecase
 import com.example.wallet.core.data.preferences.FakeApplicationPreferences
 import com.example.wallet.core.data.preferences.application.ApplicationPreferences
 import com.example.wallet.core.domain.entity.Expense
+import com.example.wallet.core.util.TestingConstants.MONTH1
+import com.example.wallet.core.util.TestingConstants.MONTH2
+import com.example.wallet.core.util.TestingConstants.MONTH3
+import com.example.wallet.core.util.createFakeTimeProvider
 import com.example.wallet.feature_main.data.repository.FakeRecurrentRepository
 import com.example.wallet.feature_main.data.time.DefaultTimeProvider
 import com.example.wallet.feature_main.data.time.FakeTimeComparator
@@ -17,10 +21,6 @@ import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZoneOffset
-
-private const val MONTH1 = "2020-01-20T10:05:00Z"
-private const val MONTH2 = "2020-02-20T10:05:00Z"
-private const val MONTH3 = "2020-03-20T10:05:00Z"
 
 class GetPendingUpdateUseCaseTest {
 
@@ -89,10 +89,6 @@ class GetPendingUpdateUseCaseTest {
             val response = useCase()
             assertThat(response).isNull()
         }
-
-    private fun createFakeTimeProvider(date: String) = DefaultTimeProvider(
-        Clock.fixed(Instant.parse(date), ZoneOffset.UTC)
-    )
 
     private fun createGetPendingUpdateUseCase(
         timeProvider: TimeProvider,

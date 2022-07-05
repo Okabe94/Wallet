@@ -3,6 +3,8 @@ package com.example.wallet.feature_main.domain.usecase
 import com.example.wallet.core.data.preferences.FakeApplicationPreferences
 import com.example.wallet.core.data.preferences.application.ApplicationPreferences
 import com.example.wallet.core.domain.entity.Expense
+import com.example.wallet.core.util.TestingConstants.MONTH1
+import com.example.wallet.core.util.createFakeTimeProvider
 import com.example.wallet.feature_main.data.repository.FakeRecurrentRepository
 import com.example.wallet.feature_main.data.time.DefaultTimeProvider
 import com.example.wallet.feature_main.data.time.FakeTimeComparator
@@ -17,8 +19,6 @@ import org.junit.Test
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset
-
-private const val MONTH1 = "2020-01-20T10:05:00Z"
 
 class UpdateRecurrentUseCaseTest {
 
@@ -139,10 +139,6 @@ class UpdateRecurrentUseCaseTest {
             assertThat(currentDummy.updatedUntil).isNotEqualTo(currentUpdated.updatedUntil)
         }
     }
-
-    private fun createFakeTimeProvider(date: String) = DefaultTimeProvider(
-        Clock.fixed(Instant.parse(date), ZoneOffset.UTC)
-    )
 
     private fun createFakeUpdateRecurrentUseCase(
         timeProvider: TimeProvider,
