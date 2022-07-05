@@ -20,7 +20,6 @@ import org.junit.Test
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
-import java.time.ZoneOffset
 
 class GetPendingUpdateUseCaseTest {
 
@@ -36,7 +35,7 @@ class GetPendingUpdateUseCaseTest {
     }
 
     @Test
-    fun `Months elapsed - No preferences, get expenses`(): Unit = runBlocking {
+    fun `Months elapsed, No preferences - Get expenses`(): Unit = runBlocking {
         val timeProvider = createFakeTimeProvider(MONTH3)
         val useCase = createGetPendingUpdateUseCase(timeProvider)
 
@@ -46,27 +45,7 @@ class GetPendingUpdateUseCaseTest {
     }
 
     @Test
-    fun `No month elapsed - No preferences, get null`(): Unit = runBlocking {
-        val timeProvider = createFakeTimeProvider(MONTH1)
-        val useCase = createGetPendingUpdateUseCase(timeProvider)
-
-        val response = useCase()
-        assertThat(response).isNull()
-    }
-
-    @Test
-    fun `No month elapsed - With preferences, get null`(): Unit = runBlocking {
-        val timeProvider = createFakeTimeProvider(MONTH1)
-        val useCase = createGetPendingUpdateUseCase(
-            timeProvider,
-            preferences = FakeApplicationPreferences(timeProvider.now().millis())
-        )
-        val response = useCase()
-        assertThat(response).isNull()
-    }
-
-    @Test
-    fun `Months elapsed - With preferences, get expenses`(): Unit = runBlocking {
+    fun `Months elapsed, With preferences - Get expenses`(): Unit = runBlocking {
         val timeProvider = createFakeTimeProvider(MONTH3)
         val useCase = createGetPendingUpdateUseCase(
             timeProvider,
@@ -79,16 +58,24 @@ class GetPendingUpdateUseCaseTest {
     }
 
     @Test
-    fun `Getting No expenses, different day from last in preferences, successful`(): Unit =
-        runBlocking {
-            val timeProvider = createFakeTimeProvider(MONTH3)
-            val useCase = createGetPendingUpdateUseCase(
-                timeProvider,
-                preferences = FakeApplicationPreferences(timeProvider.now().millis())
-            )
-            val response = useCase()
-            assertThat(response).isNull()
-        }
+    fun `No month elapsed, No preferences - Get null`(): Unit = runBlocking {
+        val timeProvider = createFakeTimeProvider(MONTH1)
+        val useCase = createGetPendingUpdateUseCase(timeProvider)
+
+        val response = useCase()
+        assertThat(response).isNull()
+    }
+
+    @Test
+    fun `No month elapsed, With preferences - Get null`(): Unit = runBlocking {
+        val timeProvider = createFakeTimeProvider(MONTH1)
+        val useCase = createGetPendingUpdateUseCase(
+            timeProvider,
+            preferences = FakeApplicationPreferences(timeProvider.now().millis())
+        )
+        val response = useCase()
+        assertThat(response).isNull()
+    }
 
     private fun createGetPendingUpdateUseCase(
         timeProvider: TimeProvider,

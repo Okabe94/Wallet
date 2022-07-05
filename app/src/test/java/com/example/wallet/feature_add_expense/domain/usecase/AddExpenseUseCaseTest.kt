@@ -31,7 +31,7 @@ class AddExpenseUseCaseTest {
     }
 
     @Test
-    fun `Data is being created correctly`(): Unit = runBlocking {
+    fun `Data created - No Dup, No Alteration`(): Unit = runBlocking {
         val time = fakeTimeProvider.now()
         val created = time.millis()
         val updatedUntil = time.rollMonths().millis()
@@ -51,7 +51,7 @@ class AddExpenseUseCaseTest {
     }
 
     @Test
-    fun `Data is being added - Returns true`(): Unit = runBlocking {
+    fun `Data created - Returns true`(): Unit = runBlocking {
         val result = useCase(fakeAddExpenseState)
         assertThat(result).isTrue()
     }

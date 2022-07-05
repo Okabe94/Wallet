@@ -107,7 +107,7 @@ class UpdateRecurrentUseCaseTest {
     }
 
     @Test(expected = Exception::class)
-    fun `Months elapsed - Catch exception during execution`(): Unit = runBlocking {
+    fun `Months elapsed - Catch exception`(): Unit = runBlocking {
         val provider = createFakeTimeProvider(MONTH1)
         val useCase = createFakeUpdateRecurrentUseCase(
             provider, timeComparator = FaultyTimeComparator()
@@ -116,7 +116,7 @@ class UpdateRecurrentUseCaseTest {
     }
 
     @Test
-    fun `Months elapsed - Data is the same`(): Unit = runBlocking {
+    fun `Months elapsed - Data not altered`(): Unit = runBlocking {
         val monthsElapsed = 2L
         val provider = createFakeTimeProvider(MONTH1)
         val useCase = createFakeUpdateRecurrentUseCase(
