@@ -31,18 +31,17 @@ private fun HomeScreenPreview() = AppBaseSurface { HomeScreen(PaddingValues(10.d
 @Composable
 @Preview(showBackground = true, name = "Light Mode")
 @Preview(showBackground = true, name = "Dark Mode", uiMode = UI_MODE_NIGHT_YES)
-private fun ExpenseItemPreview() =
-    AppBaseSurface {
-        ExpenseItem(
-            Expense(
-                "Comida",
-                "$ 2,000",
-                true,
-                createdAt = 20,
-                updatedUntil = 39
-            )
-        ) {}
-    }
+private fun ExpenseItemPreview() = AppBaseSurface {
+    ExpenseItem(
+        Expense(
+            "Comida",
+            "$ 2,000",
+            true,
+            createdAt = 20,
+            updatedUntil = 39
+        )
+    ) {}
+}
 
 @Composable
 fun HomeScreen(

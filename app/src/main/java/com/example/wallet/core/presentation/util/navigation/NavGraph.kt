@@ -31,7 +31,7 @@ fun SetupNavGraph(navController: NavHostController, paddingValues: PaddingValues
             DetailScreen(paddingValues, navController, id = it.arguments?.getInt("id"))
         }
         composable(route = NavScreen.ProfileScreen.route) {
-            ProfileScreen(paddingValues, navController)
+            ProfileScreen(paddingValues)
         }
     }
 
